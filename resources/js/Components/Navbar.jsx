@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
-import logo from '/public/img/bliblilogo2.svg';
+import logo from '/public/img/mainblibli.png';
 import cart from '/public/img/cart.png';
 
 export default function Navbar() {
