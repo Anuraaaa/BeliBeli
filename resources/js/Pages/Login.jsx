@@ -2,19 +2,29 @@ import Header from '@/Components/Header';
 import Navbar from '@/Components/Navbar';
 import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
-import logo from '/public/img/bliblilogo1.png'
+import logo from '/public/img/mainblibli.png'
+
+function closebutton() {
+    const id = document.getElementById('btnclose')
+    if (document.getElementById('btnclose')) {
+        id.remove();
+        return false;
+    }    
+}
 
 export default function Login(props) {
+    console.log('login props', props)
     return (
         <>
         <div>
-            <Header/>
+            <Header title={props.title}/>
             <Navbar/>
             <div className='block absolute bg-blue-600 h-full left-0 right-0'>
                 <div className='container mx-auto p-16'>
                     <div className='card w-1/2 lg:max-w-screen-lg sm:max-w-screen-sm bg-base-100 shadow-xl mx-auto'>
                         <div className='card-body'>
-                            <form action='/login' method='post' className='form-control w-full'>
+                            <form action='/login' method='POST' className='form-control w-full'>
+                                <input type="hidden" name="_token" value={props.token} />                            
                                 {props.error && (
                                     <div className="alert alert-error mb-8 py-0" id='btnclose'>
                                         {props.error}
@@ -31,7 +41,7 @@ export default function Login(props) {
                                         </button>
                                     </div>
                                 )}
-                                <img src={logo} alt="" className='mx-auto h-10'/>
+                                <img src={logo} alt="" className='mx-auto h-16'/>
                                 <h1 className='flex justify-center'><b>Login Form</b></h1>
                                 <label className='label'>
                                     <span className='label-text'><b>Email</b></span>
