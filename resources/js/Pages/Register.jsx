@@ -2,18 +2,27 @@ import Header from '@/Components/Header';
 import Navbar from '@/Components/Navbar';
 import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
-import logo from '/public/img/bliblilogo1.png'
+import logo from '/public/img/mainblibli.png'
+
+function closebutton() {
+    const id = document.getElementById('btnclose')
+    if (document.getElementById('btnclose')) {
+        id.remove();
+        return false;
+    }    
+}
 
 export default function Register(props) {
     return (
         <>
-        <Header/>
+        <Header title={props.title}/>
         <Navbar/>
         <div className='block absolute bg-blue-600 left-0 right-0'>
             <div className='container mx-auto p-16'>
                 <div className='card w-1/2 lg:max-w-screen-lg sm:max-w-screen-sm bg-base-100 shadow-xl mx-auto'>
                     <div className='card-body'>
-                        <form action='/register' method='post' className='form-control w-full'>
+                        <form action='/register' method='POST' className='form-control w-full'>
+                            <input type="hidden" name="_token" value={props.token} />                            
                             {props.errors.email && (
                                 <div className="alert alert-error mb-8 py-0" id='btnclose'>
                                     {props.errors.email}
@@ -30,12 +39,12 @@ export default function Register(props) {
                                     </button>
                                 </div>
                             )}
-                            <img src={logo} alt="" className='mx-auto h-10'/>
+                            <img src={logo} alt="" className='mx-auto h-16'/>
                             <h1 className='flex justify-center'><b>Registration Form</b></h1>
                             <label className='label'>
                                 <span className='label-text'><b>Name</b></span>
                             </label>
-                            <input type="text" name='name' placeholder='Type name here' required className='input input-bordered w-full'/>
+                            <input type="text" name='fullname' placeholder='Type full name here' required className='input input-bordered w-full'/>
                             <label className='label'>
                                 <span className='label-text'><b>Username</b></span>
                             </label>
@@ -45,6 +54,14 @@ export default function Register(props) {
                             </label>
                             <input type="email" name='email' placeholder='Type email here' required className='input input-bordered w-full'/>
                             <label className='label'>
+                                <span className='label-text'><b>Gender</b></span>
+                            </label>
+                            <select className="select select-bordered w-full max-w-lg" name='gender'>
+                                <option disabled selected>Select your gender...</option>
+                                <option value={'laki-laki'}>Laki-Laki</option>
+                                <option value={'perempuan'}>Perempuan</option>
+                            </select>
+                            <label className='label'>
                                 <span className='label-text'><b>Password</b></span>
                             </label>
                             <input type="password" name='password' placeholder='Type password here' required className='input input-bordered w-full'/>
@@ -52,7 +69,11 @@ export default function Register(props) {
                                 <span className='label-text'><b>Re-Type Password</b></span>
                             </label>
                             <input type="password" name='repassword' placeholder='Type password again here' required className='input input-bordered w-full'/>
-                            <button type='submit' className='btn btn-primary mt-8'>Submit</button>
+                            <label className="label cursor-pointer mt-2">
+                                <span className="label-text">Dengan mencentang ini, kamu menyetujui Syarat & Ketentuan kami.</span> 
+                                <input type="checkbox" name='checkbox' className="checkbox" />
+                            </label>                            
+                            <button type='submit' className='btn btn-primary'>Submit</button>
                             <div className="flex items-center justify-end mt-4">
                                 <Link
                                     href={route('login')}
