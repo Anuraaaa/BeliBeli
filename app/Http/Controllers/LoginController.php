@@ -8,9 +8,11 @@ use Inertia\Inertia;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Login');
+        $token = $request->session()->token();
+        $token = csrf_token();
+        return Inertia::render('Login', ['title' => 'Login', 'token' => $token]);
     }
 
     public function authenticate(Request $request)
@@ -22,9 +24,8 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials))
         {
-            //success
-            return Inertia::redirect()->route('home');
+            return Inertia::render('Welcome', ['title' => 'Home']);
         }
-        return Inertia::render('Login', ['error', 'Login Error!']);
+        return Inertia::render('Login', ['title' => 'Login', 'error', 'Login Error!']);
     }
 }
