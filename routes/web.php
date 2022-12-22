@@ -19,5 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->name('storeRegister');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('storeLogin');
 
 require __DIR__.'/auth.php';
