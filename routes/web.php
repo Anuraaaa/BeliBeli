@@ -21,5 +21,6 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('storeRegister');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('storeLogin');
+Route::post('/', [LoginController::class, 'logout'])->name('logout');
 
 require __DIR__.'/auth.php';
