@@ -14,17 +14,20 @@ class RegisterController extends Controller
         $token = $request->session()->token();
         $token = csrf_token();
 
-        return Inertia::render('Register', ['title' => 'Register', 'token' => $token]);
+        return Inertia::render('Register', [
+            'title' => 'Register', 
+            'token' => $token,
+            'isUser' => 'guest'
+        ]);
     }
 
     public function store(Request $request)
     {
         //passing data props errors tidak butuh props custom session karena ada validate unique
         $validatedData = $request->validate([
-            'fullname' => 'required|max:255',
+            'nama_lengkap' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users',
             'email' => 'required|email:dns|unique:users',
-            'gender' => 'required|in:laki-laki,perempuan',
             'password' => 'required_with:repassword|same:repassword|min:5|max:255',
             'repassword' => 'required|min:5|max:255',
             'checkbox' => 'required'
@@ -32,7 +35,14 @@ class RegisterController extends Controller
 
         $validatedData['password'] = Hash::make($validatedData['password']);
 
+        $token = $request->session()->token();
+        $token = csrf_token();
+
         User::create($validatedData);
-        return Inertia::render('Login', ['title' => 'Login', 'success' => 'Registration successfull! Please login']); //passing data props custom session
+        return Inertia::render('Login', [
+            'title' => 'Login', 
+            'success' => 'Registration successfull! Please login',
+            'token' => $token
+        ]); //passing data props custom session
     }
 }
