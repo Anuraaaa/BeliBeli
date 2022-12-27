@@ -44,7 +44,7 @@ export default function Register(props) {
                             <label className='label'>
                                 <span className='label-text'><b>Name</b></span>
                             </label>
-                            <input type="text" name='fullname' placeholder='Type full name here' required className='input input-bordered w-full'/>
+                            <input type="text" name='nama_lengkap' placeholder='Type full name here' required className='input input-bordered w-full'/>
                             <label className='label'>
                                 <span className='label-text'><b>Username</b></span>
                             </label>
@@ -53,14 +53,6 @@ export default function Register(props) {
                                 <span className='label-text'><b>Email</b></span>
                             </label>
                             <input type="email" name='email' placeholder='Type email here' required className='input input-bordered w-full'/>
-                            <label className='label'>
-                                <span className='label-text'><b>Gender</b></span>
-                            </label>
-                            <select className="select select-bordered w-full max-w-lg" name='gender'>
-                                <option disabled selected>Select your gender...</option>
-                                <option value={'laki-laki'}>Laki-Laki</option>
-                                <option value={'perempuan'}>Perempuan</option>
-                            </select>
                             <label className='label'>
                                 <span className='label-text'><b>Password</b></span>
                             </label>
