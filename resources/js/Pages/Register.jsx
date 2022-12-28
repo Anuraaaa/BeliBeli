@@ -16,7 +16,7 @@ export default function Register(props) {
     return (
         <>
         <Header title={props.title}/>
-        <Navbar/>
+        <Navbar user={props.isUser}/>
         <div className='block absolute bg-blue-600 left-0 right-0'>
             <div className='container mx-auto p-16'>
                 <div className='card w-1/2 lg:max-w-screen-lg sm:max-w-screen-sm bg-base-100 shadow-xl mx-auto'>
