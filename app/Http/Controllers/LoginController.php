@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Login');
+        $token = $request->session()->token();
+        $token = csrf_token();
+        return Inertia::render('Login', [
+            'title' => 'Login',
+            'token' => $token, 
+            'isUser' => 'guest'
+        ]);
     }
 
     public function authenticate(Request $request)
@@ -22,9 +29,27 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials))
         {
-            //success
-            return Inertia::redirect()->route('home');
+            $barangs = Barang::paginate(5);
+            return Inertia::render('Barang', [
+                'title' => 'Home', 
+                'isUser' => 'pembeli',
+                'barangs' => $barangs
+            ]);
         }
-        return Inertia::render('Login', ['error', 'Login Error!']);
+        return Inertia::render('Login', [
+            'title' => 'Login', 
+            'error' =>'Login Error!',
+            'isUser' => 'tamu'
+        ]);
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

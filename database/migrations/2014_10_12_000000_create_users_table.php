@@ -15,14 +15,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id_user');
-            $table->longText('fullname', 24);
+            $table->string('nama_lengkap', 124);
             $table->string('username', 24);
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('type_user', 12);
-            $table->string('alamat', 124);
-            $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
+            $table->enum('type_user', ['tamu', 'pembeli', 'penjual'])->default('pembeli');
             $table->rememberToken();
             $table->timestamps();
         });
