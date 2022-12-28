@@ -30,16 +30,16 @@ class LoginController extends Controller
         if (Auth::attempt($credentials))
         {
             $barangs = Barang::paginate(5);
-            return Inertia::render('Welcome', [
+            return Inertia::render('Barang', [
                 'title' => 'Home', 
-                'isUser' => 'login',
+                'isUser' => 'pembeli',
                 'barangs' => $barangs
             ]);
         }
         return Inertia::render('Login', [
             'title' => 'Login', 
             'error' =>'Login Error!',
-            'isUser' => 'guest'
+            'isUser' => 'tamu'
         ]);
     }
     public function logout(Request $request)

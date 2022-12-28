@@ -17,7 +17,7 @@ class RegisterController extends Controller
         return Inertia::render('Register', [
             'title' => 'Register', 
             'token' => $token,
-            'isUser' => 'guest'
+            'isUser' => 'tamu'
         ]);
     }
 
@@ -42,6 +42,7 @@ class RegisterController extends Controller
         return Inertia::render('Login', [
             'title' => 'Login', 
             'success' => 'Registration successfull! Please login',
+            'isUser' => 'tamu',
             'token' => $token
         ]); //passing data props custom session
     }
