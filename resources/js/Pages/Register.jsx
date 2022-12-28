@@ -19,7 +19,7 @@ export default function Register(props) {
         <Navbar user={props.isUser}/>
         <div className='block absolute bg-blue-600 left-0 right-0'>
             <div className='container mx-auto p-16'>
-                <div className='card w-1/2 lg:max-w-screen-lg sm:max-w-screen-sm bg-base-100 shadow-xl mx-auto'>
+                <div className='card lg:w-1/2 lg:max-w-screen-lg sm:max-w-screen-sm bg-base-100 shadow-xl mx-auto'>
                     <div className='card-body'>
                         <form action='/register' method='POST' className='form-control w-full'>
                             <input type="hidden" name="_token" value={props.token} />                            

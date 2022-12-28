@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/inertia-react'
 import cart from '/public/img/cart2.png'
 
 const isProduct = (products) => {
@@ -17,10 +18,10 @@ const isProduct = (products) => {
                 <p><strong>Keterangan:</strong></p>
                 <p>{data.keterangan}</p>
                 <div className="card-actions justify-end">
-                <button className="btn btn-md btn-ghost bg-blue-400 hover:bg-blue-600 focus:bg-blue-400">
+                <Link href={'/pesanan/' + i} className="btn btn-md btn-ghost bg-blue-400 hover:bg-blue-600 focus:bg-blue-400">
                     <img src={cart} alt="" className='h-6 mr-2'/>
                     Pesan
-                    </button>
+                    </Link>
                 </div>
             </div>
             </div>        

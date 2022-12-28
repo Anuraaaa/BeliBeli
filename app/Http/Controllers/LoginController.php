@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Barang;
 use Illuminate\Http\Request;
@@ -29,12 +30,18 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials))
         {
-            $barangs = Barang::paginate(5);
-            return Inertia::render('Barang', [
-                'title' => 'Home', 
-                'isUser' => 'pembeli',
-                'barangs' => $barangs
-            ]);
+            if (Auth::check())
+            {
+                $user = Auth::user();
+                $barangs = Barang::paginate(5);
+                return Inertia::render('Barang', [
+                    'title' => 'Home', 
+                    'isUser' => 'pembeli',
+                    'barangs' => $barangs,
+                    'dataUser' => $user->nama_lengkap
+                ]);
+            }
+
         }
         return Inertia::render('Login', [
             'title' => 'Login', 
