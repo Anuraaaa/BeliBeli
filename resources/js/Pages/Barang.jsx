@@ -17,7 +17,7 @@ export default function Welcome(props) {
         </div>
         <div className='bg-gray-300 py-8'>
             <div className='flex justify-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch items-center gap-4 p-4'>
-                <AllProduct products={props.barangs.data} user={props.isUser}/>
+                <AllProduct products={props.barangs.data}/>
             </div>
         </div>
         </>

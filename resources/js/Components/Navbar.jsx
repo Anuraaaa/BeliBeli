@@ -1,13 +1,13 @@
 import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
 import logo from '/public/img/mainblibli.png';
-import cart from '/public/img/cart.png';
+import bag from '/public/img/bag.png';
 
 export default function Navbar({user}) {
 
     console.log('props navbar: ', user)
 
-    if (user == "guest")
+    if (user == "tamu")
     {
         return (
             <>
@@ -22,24 +22,25 @@ export default function Navbar({user}) {
                     <li><a>About</a></li>
                 </ul>
                 </div>
-                <img src={logo} alt="" className='h-8' />
-                <a className="normal-case text-xl ml-2 font-bold">BeliBeli</a>
+                <Link href={route('home')}><img src={logo} alt="" className='h-8' /></Link>
+                <Link href={route('home')} className="normal-case text-xl ml-2 font-bold">BeliBeli</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-white font-bold">
                 <li><Link href={route('home')}>Home</Link></li>
-                <li><a>About</a></li>
+                <li><Link>About</Link></li>
                 </ul>
+                <Link><img src={bag} alt="" className='h-8 mr-4 hidden lg:block '/></Link>
             </div>
             <div className="navbar-end">
-                <img src={cart} alt="" className='h-8 mr-4'/>
+                <img src={bag} alt="" className='h-8 mr-4 lg:hidden'/>
                 <Link href={route('login')} className="btn btn-ghost bg-blue-700 text-white normal-case mr-4 font-bold">Login</Link>
             </div>
             </div>
             </>
         )    
     }
-    else if (user == "login")
+    else if (user == "pembeli")
     {
         return (
             <>
@@ -51,19 +52,21 @@ export default function Navbar({user}) {
                 </label>
                 <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-white font-bold">
                     <li><Link href={route('home')}>Home</Link></li>
-                    <li><a>About</a></li>
+                    <li><Link>About</Link></li>
                 </ul>
                 </div>
-                <img src={logo} alt="" className='h-8' />
-                <a className="normal-case text-xl ml-2 font-bold">BeliBeli</a>
+                <Link href={route('home')}><img src={logo} alt="" className='h-8' /></Link>
+                <Link href={route('home')} className="normal-case text-xl ml-2 font-bold">BeliBeli</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-white font-bold">
                 <li><Link href={route('home')}>Home</Link></li>
-                <li><a>About</a></li>
+                <li><Link>About</Link></li>
                 </ul>
+                <Link><img src={bag} alt="" className='h-8 mr-4 hidden lg:block '/></Link>
             </div>
             <div className="navbar-end">
+                <img src={bag} alt="" className='h-8 mr-4 lg:hidden'/>
                 <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
@@ -86,7 +89,7 @@ export default function Navbar({user}) {
             </>
         )
     }
-    else if (user == "admin")
+    else if (user == "penjual")
     {
         return (
             <>
@@ -101,16 +104,18 @@ export default function Navbar({user}) {
                     <li><a>About</a></li>
                 </ul>
                 </div>
-                <img src={logo} alt="" className='h-8' />
-                <a className="normal-case text-xl ml-2 font-bold">BeliBeli</a>
+                <Link href={route('home')}><img src={logo} alt="" className='h-8' /></Link>
+                <Link href={route('home')} className="normal-case text-xl ml-2 font-bold">BeliBeli</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-white font-bold">
                 <li><Link href={route('home')}>Home</Link></li>
                 <li><a>About</a></li>
                 </ul>
+                <Link><img src={bag} alt="" className='h-8 mr-4 hidden lg:block '/></Link>
             </div>
             <div className="navbar-end">
+                <img src={bag} alt="" className='h-8 mr-4 lg:hidden'/>
                 <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
