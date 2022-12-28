@@ -3,7 +3,7 @@ import React from 'react';
 import logo from '/public/img/mainblibli.png';
 import bag from '/public/img/bag.png';
 
-export default function Navbar({user}) {
+export default function Navbar({user, nama}) {
 
     console.log('props navbar: ', user)
 
@@ -74,14 +74,26 @@ export default function Navbar({user}) {
                         </div>
                     </label>
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                        {nama.length >= 16 ?
+                        <>
                         <li>
-                        <a className="justify-between">
-                            Profile
-                            <span className="badge">New</span>
-                        </a>
+                            <a className="justify-center text-xs">
+                                {nama ? nama : ""}
+                            </a>
                         </li>
-                        <li><a>Settings</a></li>
-                        <li><Link href={route('logout')}>Logout</Link></li>
+                        <li><Link href={route('logout')} className='text-xs'>Logout</Link></li>
+                        </>                         
+                        :
+                        <>
+                        <li>
+                            <a className="justify-center text-md">
+                                {nama ? nama : ""}
+                            </a>
+                            <hr />
+                            <li><Link href={route('logout')} className='text-md'>Logout</Link></li>
+                        </li>
+                        </>
+                        }
                     </ul>
                 </div>
             </div>
