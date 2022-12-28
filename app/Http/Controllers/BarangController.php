@@ -14,7 +14,8 @@ class BarangController extends Controller
         return Inertia::render('Barang', [
             'title' => 'Home', 
             'isUser' => 'tamu',
-            'barangs' => $barangs
+            'barangs' => $barangs,
+            'dataUser' => ''
         ]);
     }
 }
