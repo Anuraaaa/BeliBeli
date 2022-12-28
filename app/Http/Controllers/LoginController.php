@@ -16,7 +16,7 @@ class LoginController extends Controller
         return Inertia::render('Login', [
             'title' => 'Login',
             'token' => $token, 
-            'isUser' => 'guest'
+            'isUser' => 'tamu'
         ]);
     }
 
