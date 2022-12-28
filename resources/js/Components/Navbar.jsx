@@ -7,7 +7,7 @@ export default function Navbar({user}) {
 
     console.log('props navbar: ', user)
 
-    if (user == "guest")
+    if (user == "tamu")
     {
         return (
             <>
@@ -39,7 +39,7 @@ export default function Navbar({user}) {
             </>
         )    
     }
-    else if (user == "login")
+    else if (user == "pembeli")
     {
         return (
             <>
@@ -86,7 +86,7 @@ export default function Navbar({user}) {
             </>
         )
     }
-    else if (user == "admin")
+    else if (user == "penjual")
     {
         return (
             <>
