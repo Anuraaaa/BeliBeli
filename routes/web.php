@@ -18,11 +18,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [BarangController::class, 'index'])->name('home');
+Route::get('/?page={page}', [BarangController::class, 'indexPage']);
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('storeRegister');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('storeLogin');
 Route::post('/', [LoginController::class, 'logout'])->name('logout');
-Route::get('/pesanan/{id}', [PesananController::class, 'index']);
+Route::get('/page={page}/pesanan/{barang}={id}', [PesananController::class, 'index']);
 
 require __DIR__.'/auth.php';
