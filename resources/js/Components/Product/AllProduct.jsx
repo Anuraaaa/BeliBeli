@@ -9,7 +9,7 @@ const isProduct = (products) => {
             <div key={i} className="card card-compact w-96 bg-base-100 shadow-xl p-4">
             <figure><img src="https://placeimg.com/400/225/arch" alt="" /></figure>
             <div className="card-body">
-                <h1 className="card-title">
+                <h1 className="card-title text-2xl">
                     {data.nama_barang}
                     <br />
                     RP {data.harga}
