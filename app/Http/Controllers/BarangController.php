@@ -18,4 +18,14 @@ class BarangController extends Controller
             'dataUser' => ''
         ]);
     }
+    public function indexPage ($page)
+    {
+        $barangs = Barang::paginate(5);
+        return Inertia::render('Barang', [
+            'title' => 'Home', 
+            'isUser' => 'tamu',
+            'barangs' => $barangs,
+            'dataUser' => ''
+        ]);
+    }
 }

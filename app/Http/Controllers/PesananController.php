@@ -9,7 +9,7 @@ use Inertia\Inertia;
 
 class PesananController extends Controller
 {
-    public function index($id) {
+    public function index($page, $barang, $id) {
 
         $data = Barang::where('id_barang', $id)->first();    
         if (Auth::check())
@@ -17,13 +17,17 @@ class PesananController extends Controller
             return Inertia::render('Pesanan', [
                 'title' => 'Pesanan',
                 'isUser' => 'pembeli',
-                'data' => $data
+                'data' => $data,
+                'currentPage' => $page,
+                'namabarang' => $barang
             ]);
         }
         return Inertia::render('Pesanan', [
             'title' => 'Pesanan',
             'isUser' => 'tamu',
-            'data' => $data
+            'data' => $data,
+            'currentPage' => $page,
+            'namabarang' => $barang
         ]);
     }
 }

@@ -13,7 +13,7 @@ export default function Pesanan (props) {
                 <img src="https://placeimg.com/700/780/arch" alt="" className='h-36 w-full lg:h-full lg:w-1/2'/>
                 <div className="card-body">
                     <h2 className="card-title text-2xl">
-                        {props.data.nama_barang}
+                        {props.namabarang}
                         <br />
                         Harga: RP {props.data.harga}
                     
@@ -27,7 +27,7 @@ export default function Pesanan (props) {
                     <div className="card-actions justify-end">
                         <span>
                             <button className="btn btn-xs md:btn-md bg-blue-400 btn-ghost hover:bg-blue-500 text-xs lg:mr-2">Masukkan Keranjang</button>
-                            <Link href={route('home')} className="btn btn-xs md:btn-md bg-blue-400 btn-ghost hover:bg-blue-500 mt-2">Kembali</Link>
+                            <Link href={'/?page=' + props.currentPage} className="btn btn-xs md:btn-md bg-blue-400 btn-ghost hover:bg-blue-500 mt-2">Kembali</Link>
                         </span>
                     </div>
                 </div>
