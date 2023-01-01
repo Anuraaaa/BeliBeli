@@ -2,6 +2,7 @@ import Carousel from '@/Components/Carousel'
 import Header from '@/Components/Header'
 import Navbar from '@/Components/Navbar'
 import AllProduct from '@/Components/Product/AllProduct'
+import Paginate from '@/Components/Product/Paginate'
 import React from 'react'
 
 export default function Welcome(props) {
@@ -18,6 +19,9 @@ export default function Welcome(props) {
         <div className='bg-gray-300 py-8'>
             <div className='flex justify-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch items-center gap-4 p-4'>
                 <AllProduct products={props.barangs.data}/>
+            </div>
+            <div className='flex justify-center items-center p-4'>
+                <Paginate barangs={props.barangs}/>
             </div>
         </div>
         </>
