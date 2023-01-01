@@ -19,7 +19,11 @@ export default function Pesanan (props) {
                     
                     </h2>
                     <hr />
-                    <p><strong>Keterangan: </strong>{props.data.keterangan}</p>
+                    <p>
+                        <strong>Stok: </strong>{props.data.stock}
+                        <br />
+                        <strong>Keterangan: </strong>{props.data.keterangan}
+                    </p>
                     <div className="card-actions justify-end">
                         <span>
                             <button className="btn btn-xs md:btn-md bg-blue-400 btn-ghost hover:bg-blue-500 text-xs lg:mr-2">Masukkan Keranjang</button>
