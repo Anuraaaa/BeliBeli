@@ -1,8 +1,8 @@
 import { Link } from '@inertiajs/inertia-react'
 import cart from '/public/img/cart2.png'
 
-const isProduct = (products) => {
-    console.log('isProduct props', products)
+const isProduct = (products, page) => {
+    console.log('isProduct props', products, page.current_page)
     
     return products.map((data, i) => {
         return (
@@ -18,7 +18,7 @@ const isProduct = (products) => {
                 <p><strong>Keterangan:</strong></p>
                 <p>{data.keterangan}</p>
                 <div className="card-actions justify-end">
-                <Link href={'/pesanan/' + (i + 1)} className="btn btn-md btn-ghost bg-blue-400 hover:bg-blue-600 focus:bg-blue-400">
+                <Link href={'/page=' + (page.current_page) + '/pesanan/' + data.nama_barang + '=' + (data.id_barang)} className="btn btn-md btn-ghost bg-blue-400 hover:bg-blue-600 focus:bg-blue-400">
                     <img src={cart} alt="" className='h-6 mr-2'/>
                     Pesan
                     </Link>
@@ -39,8 +39,8 @@ const noProduct = () => {
 }
 
 
-const AllProduct = ({products}) => {
-    return !products? noProduct() : isProduct(products)
+const AllProduct = ({products, page}) => {
+    return !products? noProduct() : isProduct(products, page)
 }
 
 export default AllProduct
