@@ -2,7 +2,14 @@ import Header from '@/Components/Header';
 import Navbar from '@/Components/Navbar';
 import { Link } from '@inertiajs/inertia-react';
 
-export default function Pesanan (props) {
+const rupiah = (number)=>{
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR"
+    }).format(number);
+  }
+
+  export default function Pesanan (props) {
     console.log('Pesanan props', props)
     return (
         <>
@@ -15,7 +22,7 @@ export default function Pesanan (props) {
                     <h2 className="card-title text-2xl">
                         {props.namabarang}
                         <br />
-                        Harga: RP {props.data.harga}
+                        Harga: {rupiah(props.data.harga)}
                     
                     </h2>
                     <hr />
