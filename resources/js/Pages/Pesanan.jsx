@@ -1,5 +1,6 @@
 import Header from '@/Components/Header';
 import Navbar from '@/Components/Navbar';
+import TextInput from '@/Components/TextInput';
 import { Link } from '@inertiajs/inertia-react';
 
 const rupiah = (number)=>{
@@ -29,7 +30,15 @@ const rupiah = (number)=>{
                     <p>
                         <strong>Stok: </strong>{props.data.stock}
                         <br />
-                        <strong>Keterangan: </strong>{props.data.keterangan}
+                        <strong>Keterangan: </strong>
+                        <div className='text-justify'>
+                            {props.data.keterangan}
+                        </div>
+                        <hr className='mt-2'/>
+                        <span>
+                            <strong>Jumlah Barang: </strong>  
+                            <input type="text" className='my-4 text-center text-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'/>
+                        </span>
                     </p>
                     <div className="card-actions justify-end">
                         <span>

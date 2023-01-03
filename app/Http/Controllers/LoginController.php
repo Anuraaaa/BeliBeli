@@ -17,8 +17,7 @@ class LoginController extends Controller
         $token = csrf_token();
         return Inertia::render('Login', [
             'title' => 'Login',
-            'token' => $token, 
-            'isUser' => 'tamu'
+            'token' => $token
         ]);
     }
 

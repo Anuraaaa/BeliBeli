@@ -16,12 +16,12 @@ export default function Welcome(props) {
                 <Carousel/>
             </div>
         </div>
-        <div className='bg-gray-300 py-8'>
+        <div className='bg-gray-300 py-16'>
             <div className='flex justify-center flex-col lg:flex-row lg:flex-wrap lg:items-stretch items-center gap-4 p-4'>
                 <AllProduct products={props.barangs.data} page={props.barangs}/>
             </div>
             <div className='flex justify-center items-center p-4'>
-                <Paginate barangs={props.barangs}/>
+                <Paginate page={props.barangs} products={props.barangs.data}/>
             </div>
         </div>
         </>
