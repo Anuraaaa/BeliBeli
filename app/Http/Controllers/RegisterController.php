@@ -19,8 +19,7 @@ class RegisterController extends Controller
 
         return Inertia::render('Register', [
             'title' => 'Register', 
-            'token' => $token,
-            'isUser' => 'tamu'
+            'token' => $token
         ]);
     }
 
