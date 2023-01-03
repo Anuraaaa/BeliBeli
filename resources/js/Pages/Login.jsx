@@ -18,7 +18,7 @@ export default function Login(props) {
         <>
         <div>
             <Header title={props.title}/>
-            <Navbar user={props.isUser}/>
+            <Navbar user={props.auth.user}/>
             <div className='block absolute bg-blue-600 h-full left-0 right-0'>
                 <div className='container mx-auto p-16'>
                     <div className='card lg:w-1/2 lg:max-w-screen-lg sm:max-w-screen-sm bg-base-100 shadow-xl mx-auto'>

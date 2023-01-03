@@ -10,7 +10,7 @@ export default function Welcome(props) {
     return (
         <>
         <Header title={props.title}/>
-        <Navbar user={props.isUser} nama={props.dataUser}/>
+        <Navbar user={props.auth.user}/>
         <div className='bg-blue-300'>
             <div className='container mx-auto px-2 sm:px-4 md:px-16 lg:px-32 py-8'>
                 <Carousel/>

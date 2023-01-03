@@ -14,7 +14,7 @@ const rupiah = (number)=>{
     return (
         <>
         <Header title={props.title}/> 
-        <Navbar user={props.isUser}/>               
+        <Navbar user={props.auth.user}/>               
         <div className='lg:fixed bg-gray-300 pb-96 overflow-hidden lg:w-full'>               
             <div className="card lg:card-side bg-base-100 shadow-xl w-2/3 mx-auto my-28 lg:my-10 rounded-none">
                 <img src="https://placeimg.com/700/780/arch" alt="" className='h-36 w-full lg:h-full lg:w-1/2'/>
