@@ -24,7 +24,7 @@ const rupiah = (number)=>{
                 </h1>
                 <hr />
                 <p><strong>Keterangan:</strong></p>
-                <p>{data.keterangan}</p>
+                <p className='text-justify'>{data.keterangan}</p>
                 <div className="card-actions justify-end">
                 <Link href={'/page=' + (page.current_page) + '/pesanan/' + data.nama_barang + '=' + (data.id_barang)} className="btn btn-md btn-ghost bg-blue-400 hover:bg-blue-600 focus:bg-blue-400">
                     <img src={cart} alt="" className='h-6 mr-2'/>
