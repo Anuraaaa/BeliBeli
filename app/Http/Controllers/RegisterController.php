@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisterController extends Controller
 {
@@ -21,10 +24,19 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    /**
+     * Handle an incoming registration request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+
+     public function store(Request $request)
     {
         //passing data props errors tidak butuh props custom session karena ada validate unique
-        $validatedData = $request->validate([
+        $request->validate([
             'nama_lengkap' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users',
             'email' => 'required|email:dns|unique:users',
@@ -33,17 +45,17 @@ class RegisterController extends Controller
             'checkbox' => 'required'
         ]);
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        $user = User::create([
+            'nama_lengkap' => $request->nama_lengkap,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-        $token = $request->session()->token();
-        $token = csrf_token();
+        event(new Registered($user));
 
-        User::create($validatedData);
-        return Inertia::render('Login', [
-            'title' => 'Login', 
-            'success' => 'Registration successfull! Please login',
-            'isUser' => 'tamu',
-            'token' => $token
-        ]); //passing data props custom session
+        Auth::login($user);
+
+        return redirect(RouteServiceProvider::HOME);
     }
 }

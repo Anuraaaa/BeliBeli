@@ -2,12 +2,19 @@ import Header from '@/Components/Header';
 import Navbar from '@/Components/Navbar';
 import { Link } from '@inertiajs/inertia-react';
 
-export default function Pesanan (props) {
+const rupiah = (number)=>{
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR"
+    }).format(number);
+  }
+
+  export default function Pesanan (props) {
     console.log('Pesanan props', props)
     return (
         <>
         <Header title={props.title}/> 
-        <Navbar user={props.isUser}/>               
+        <Navbar user={props.auth.user}/>               
         <div className='lg:fixed bg-gray-300 pb-96 overflow-hidden lg:w-full'>               
             <div className="card lg:card-side bg-base-100 shadow-xl w-2/3 mx-auto my-28 lg:my-10 rounded-none">
                 <img src="https://placeimg.com/700/780/arch" alt="" className='h-36 w-full lg:h-full lg:w-1/2'/>
@@ -15,7 +22,7 @@ export default function Pesanan (props) {
                     <h2 className="card-title text-2xl">
                         {props.namabarang}
                         <br />
-                        Harga: RP {props.data.harga}
+                        Harga: {rupiah(props.data.harga)}
                     
                     </h2>
                     <hr />
