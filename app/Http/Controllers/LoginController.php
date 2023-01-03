@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Barang;
@@ -21,7 +22,14 @@ class LoginController extends Controller
         ]);
     }
 
-    public function authenticate(Request $request)
+    /**
+     * Handle an incoming authentication request.
+     *
+     * @param  \App\Http\Requests\Auth\LoginRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+     public function authenticate(LoginRequest $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -30,23 +38,12 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials))
         {
-            if (Auth::check())
-            {
-                $user = Auth::user();
-                $barangs = Barang::paginate(5);
-                return Inertia::render('Barang', [
-                    'title' => 'Home', 
-                    'isUser' => 'pembeli',
-                    'barangs' => $barangs,
-                    'dataUser' => $user->nama_lengkap
-                ]);
-            }
-
+            $request->session()->regenerate();
+            return redirect('/');
         }
         return Inertia::render('Login', [
             'title' => 'Login', 
-            'error' =>'Login Error!',
-            'isUser' => 'tamu'
+            'error' =>'Login Error!'
         ]);
     }
     public function logout(Request $request)

@@ -1,7 +1,15 @@
 import { Link } from '@inertiajs/inertia-react'
 import cart from '/public/img/cart2.png'
 
-const isProduct = (products, page) => {
+const rupiah = (number)=>{
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR"
+    }).format(number);
+  }
+  
+  
+  const isProduct = (products, page) => {
     console.log('isProduct props', products, page.current_page)
     
     return products.map((data, i) => {
@@ -12,7 +20,7 @@ const isProduct = (products, page) => {
                 <h1 className="card-title text-2xl">
                     {data.nama_barang}
                     <br />
-                    RP {data.harga}
+                    {rupiah(data.harga)}
                 </h1>
                 <hr />
                 <p><strong>Keterangan:</strong></p>
