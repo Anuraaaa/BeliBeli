@@ -37,18 +37,25 @@ const rupiah = (number)=>{
     })
 }
 
-
 const noProduct = () => {
     return (
         <>
-        <div>Saat ini belum ada barang yang dijual</div>
+        <div className="alert alert-error mb-8 mx-96 justify-center text-lg">
+            INFO: Saat ini belum ada barang yang dijual
+        </div>
         </>
     )
 }
 
 
 const AllProduct = ({products, page}) => {
-    return !products? noProduct() : isProduct(products, page)
+
+    if (products.length == 0){
+        return noProduct();
+    }
+    else {
+        return isProduct(products, page);
+    }
 }
 
 export default AllProduct
