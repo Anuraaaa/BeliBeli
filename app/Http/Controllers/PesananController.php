@@ -74,6 +74,9 @@ class PesananController extends Controller
                 $pesanan_detail->id_pesanan = $pesanan_baru->id_pesanan;
                 $pesanan_detail->jumlah_pesanan = $request->jumlah_pesanan;
                 $pesanan_detail->jumlah_harga = $barang->harga * $request->jumlah_pesanan;
+                $pesanan_detail->nama_barang = $barang->nama_barang;
+                $pesanan_detail->harga_satuan_barang = $barang->harga;
+                $pesanan_detail->keterangan_barang = $barang->keterangan;
                 $pesanan_detail->save();
             }
             else
@@ -82,9 +85,15 @@ class PesananController extends Controller
                 $pesanan_detail->jumlah_pesanan = $request->jumlah_pesanan + $request->jumlah_pesanan;
                 $harga_detail_baru = $barang->harga * $request->jumlah_pesanan;
                 $pesanan_detail->jumlah_harga = $pesanan_detail->jumlah_harga + $harga_detail_baru;
+                $pesanan_detail->nama_barang = $barang->nama_barang;
+                $pesanan_detail->harga_satuan_barang = $barang->harga;
+                $pesanan_detail->keterangan_barang = $barang->keterangan;
                 PesananDetail::where('id_barang', $barang->id_barang)->where('id_pesanan', $pesanan_baru->id_pesanan)->update([
                     'jumlah_harga' => $pesanan_detail->jumlah_harga, 
-                    'jumlah_pesanan' => $pesanan_detail->jumlah_pesanan
+                    'jumlah_pesanan' => $pesanan_detail->jumlah_pesanan,
+                    'nama_barang' => $pesanan_detail->nama_barang,
+                    'harga_satuan_barang' => $pesanan_detail->harga_satuan_barang,
+                    'keterangan_barang' => $pesanan_detail->keterangan_barang
                 ]);                
             }
             $pesanan_update = Pesanan::where('id_user', Auth::user()->id)->where('status_pesanan', 0)->first();
