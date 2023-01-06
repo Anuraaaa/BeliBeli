@@ -3,7 +3,8 @@ import React from 'react';
 import logo from '/public/img/mainblibli.png';
 import bag from '/public/img/bag.png';
 
-export default function Navbar({user}) {
+export default function Navbar({user, pesanan}) {
+    console.log("pesanancount: ", pesanan)
     return (
         <>
             <div className="navbar bg-blue-500">
@@ -25,10 +26,24 @@ export default function Navbar({user}) {
                 <li><Link href='/'>Home</Link></li>
                 <li><Link>About</Link></li>
                 </ul>
-                <Link><img src={bag} alt="" className='h-8 mr-4 hidden lg:block '/></Link>
+                <Link href={route('checkout')} className='flex gap-2'>
+                    <img src={bag} alt="" className='h-8 mr-4 hidden lg:block '/>
+                    {pesanan ?                
+                        <div className='badge badge-secondary -mx-4'>{pesanan}</div>
+                        :
+                        ''
+                    }
+                </Link>
             </div>
             <div className="navbar-end">
-                <img src={bag} alt="" className='h-8 mr-4 lg:hidden'/>
+                <Link href={route('checkout')} className='flex gap-2'>
+                    <img src={bag} alt="" className='h-8 mr-4 lg:hidden'/>
+                    {pesanan ?                
+                        <div className='badge badge-secondary -mx-4 lg:hidden'>{pesanan}</div>
+                        :
+                        ''
+                    }
+                </Link>
                 {user ? 
                     (
                         <>
@@ -47,7 +62,7 @@ export default function Navbar({user}) {
                                         </a>
                                     </li>
                                     <li>
-                                        <Link href={route('logout')} method='post' className='text-xs'>Logout</Link>
+                                        <Link href={route('logout')} method='post' as='button' type='button' className='text-xs'>Logout</Link>
                                     </li>
                                     </>                         
                                     :
@@ -59,7 +74,7 @@ export default function Navbar({user}) {
                                     </li>
                                     <hr />
                                     <li>
-                                        <Link href={route('logout')} method='post' className='text-xs'>Logout</Link>
+                                        <Link href={route('logout')} method='post' as='button' type='button' className='text-xs'>Logout</Link>
                                     </li>
                                     </>
                                     }
