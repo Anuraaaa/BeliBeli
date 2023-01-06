@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('pesanan_details', function (Blueprint $table) {
             $table->bigIncrements('id_pesanan_detail');
             $table->integer('id_barang');
+            $table->string('nama_barang');
+            $table->integer('harga_satuan_barang');
+            $table->string('keterangan_barang');
             $table->integer('id_pesanan');
             $table->integer('jumlah_pesanan');
             $table->integer('jumlah_harga');
