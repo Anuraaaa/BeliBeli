@@ -27,25 +27,24 @@ const rupiah = (number)=>{
                     
                     </h2>
                     <hr />
-                    <p>
-                        <strong>Stok: </strong>{props.data.stock}
-                        <br />
-                        <strong>Keterangan: </strong>
-                        <div className='text-justify'>
-                            {props.data.keterangan}
-                        </div>
-                        <hr className='mt-2'/>
-                        <span>
-                            <strong>Jumlah Barang: </strong>  
-                            <input type="text" className='my-4 text-center text-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'/>
-                        </span>
-                    </p>
-                    <div className="card-actions justify-end">
-                        <span>
-                            <button className="btn btn-xs md:btn-md bg-blue-400 btn-ghost hover:bg-blue-500 text-xs lg:mr-2">Masukkan Keranjang</button>
-                            <Link href={'/?page=' + props.currentPage} className="btn btn-xs md:btn-md bg-blue-400 btn-ghost hover:bg-blue-500 mt-2">Kembali</Link>
-                        </span>
+                    <strong>Stok: </strong>{props.data.stock}
+                    <br />
+                    <strong>Keterangan: </strong>
+                    <div className='text-justify'>
+                        {props.data.keterangan}
                     </div>
+                    <hr className='mt-2'/>
+                    <strong>Jumlah Pesanan: </strong>  
+                    <form action={'/page=' + props.currentPage + '/pesanan/' + props.data.nama_barang + '=' + props.data.id_barang} method='post'>
+                        <input type="hidden" name="_token" value={props.token} />                            
+                        <input type="text" name='jumlah_pesanan' className='input input-sm input-ghost w-28 text-center text-sm input-bordered rounded-md shadow-sm'/>
+                        <div className="card-actions justify-end">
+                            <span>
+                                <button className="btn btn-xs md:btn-md bg-blue-400 btn-ghost hover:bg-blue-500 text-xs lg:mr-2">Masukkan Keranjang</button>
+                                <Link href={'/?page=' + props.currentPage} className="btn btn-xs md:btn-md bg-blue-400 btn-ghost hover:bg-blue-500 mt-2">Kembali</Link>
+                            </span>
+                        </div>
+                    </form>
                 </div>
             </div>        
         </div>

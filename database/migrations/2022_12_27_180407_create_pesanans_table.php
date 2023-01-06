@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('pesanans', function (Blueprint $table) {
             $table->bigIncrements('id_pesanan');
             $table->integer('id_user');
-            $table->date('tanggal');
+            $table->date('tanggal_pesanan');
             $table->integer('jumlah_harga');
+            $table->integer('status_pesanan');
             $table->timestamps();
         });
     }

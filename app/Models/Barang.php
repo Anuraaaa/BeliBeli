@@ -11,6 +11,6 @@ class Barang extends Model
 
     public function PesananDetail() 
     {
-        return $this->hasMany(PesananDetail::class);
+        return $this->hasMany(PesananDetail::class, 'id_barang');
     }
 }
