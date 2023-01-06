@@ -12,11 +12,11 @@ class Pesanan extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_user');
     }
 
     public function pesanan_detail()
     {
-        return $this->hasMany(PesananDetail::class);
+        return $this->hasMany(PesananDetail::class, 'id_pesanan');
     }
 }
