@@ -22,21 +22,43 @@ class PesananController extends Controller
         $data = Barang::where('id_barang', $id)->first();    
         if (Auth::check())
         {
+            $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
+            if (!empty($pesanan_user))
+            {
+                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
+                return Inertia::render('Pesanan', [
+                    'title' => 'Pesanan',
+                    'data' => $data,
+                    'currentPage' => $page,
+                    'namabarang' => $barang,
+                    'token' => $token,
+                    'pesananCount' => $pesanan_detail->count()
+                ]);
+            }
+            else
+            {
+                return Inertia::render('Pesanan', [
+                    'title' => 'Pesanan',
+                    'data' => $data,
+                    'currentPage' => $page,
+                    'namabarang' => $barang,
+                    'token' => $token,
+                    'pesananCount' => 0
+                ]);
+            }
+
+        }
+        else
+        {
             return Inertia::render('Pesanan', [
                 'title' => 'Pesanan',
                 'data' => $data,
                 'currentPage' => $page,
                 'namabarang' => $barang,
-                'token' => $token
+                'token' => $token,
+                'pesananCount' => 0
             ]);
         }
-        return Inertia::render('Pesanan', [
-            'title' => 'Pesanan',
-            'data' => $data,
-            'currentPage' => $page,
-            'namabarang' => $barang,
-            'token' => $token 
-        ]);
     }
 
     public function pesan(Request $request, $page, $namabarang, $id) 
