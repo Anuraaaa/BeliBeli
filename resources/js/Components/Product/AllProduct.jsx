@@ -40,7 +40,7 @@ const rupiah = (number)=>{
 const noProduct = () => {
     return (
         <>
-        <div className="alert alert-error mb-8 mx-96 justify-center text-lg">
+        <div className="alert alert-error mb-16 mx-96 justify-center text-sm lg:text-lg">
             INFO: Saat ini belum ada barang yang dijual
         </div>
         </>

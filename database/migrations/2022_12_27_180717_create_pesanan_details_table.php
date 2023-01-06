@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id_pesanan_detail');
             $table->integer('id_barang');
             $table->integer('id_pesanan');
-            $table->integer('jumlah_barang');
+            $table->integer('jumlah_pesanan');
             $table->integer('jumlah_harga');
             $table->timestamps();
         });

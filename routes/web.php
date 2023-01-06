@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -18,8 +19,10 @@ use App\Http\Controllers\PesananController;
 */
 
 Route::get('/', [BarangController::class, 'index']);
+Route::get('/about', [AboutController::class, 'index']);
 
 Route::get('/page={page}/pesanan/{barang}={id}', [PesananController::class, 'index']);
+Route::post('/page={page}/pesanan/{barang}={id}', [PesananController::class, 'pesan']);
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
