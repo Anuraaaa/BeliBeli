@@ -56,8 +56,8 @@ class CheckoutController extends Controller
                 
                 if (!empty($pesanan_detail))
                 {
-                    $harga_pesenan_update = $pesanan_user->jumlah_harga - $pesanan_detail->jumlah_harga;
-                    Pesanan::where('id_user', Auth::user()->id)->update(['jumlah_harga' => $harga_pesenan_update]);
+                    $harga_pesanan_update = $pesanan_user->jumlah_harga - $pesanan_detail->jumlah_harga;
+                    Pesanan::where('id_user', Auth::user()->id)->update(['jumlah_harga' => $harga_pesanan_update]);
                     $pesanan_detail_delete = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->where('id_pesanan_detail', $id_pesanan_detail);
                     $pesanan_detail_delete->delete();
 
@@ -79,11 +79,15 @@ class CheckoutController extends Controller
             $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
             if (!empty($pesanan_user))
             {
-                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan);
-                $pesanan_detail->delete();
+                
+                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
+                $barang = Barang::where('id_barang', $pesanan_detail->id_barang)->first();
 
-                $pesanan_user_delete = Pesanan::where('id_user', Auth::user()->id);
-                $pesanan_user_delete->delete();
+                $stock_barang = $barang->stock - $pesanan_detail->jumlah_pesanan;
+
+                Barang::where('id_barang', $pesanan_detail->id_barang)->update(['stock' => $stock_barang]);                
+                PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->delete();
+                Pesanan::where('id_user', Auth::user()->id)->delete();
             }
         }
         return redirect('/');   
