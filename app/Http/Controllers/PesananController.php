@@ -83,7 +83,7 @@ class PesananController extends Controller
             $tanggal = Carbon::now();
 
             //cek stok 
-            if ($request->jumlah_pesanan > $barang->stock)
+            if ($request->jumlah_pesanan > $barang->stock || $request->jumlah_pesanan <= 0)
             {
                 return redirect('/page='. $page. '/pesanan/'. $namabarang. '='. $id);
             }
