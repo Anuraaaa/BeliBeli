@@ -26,14 +26,28 @@ class PesananController extends Controller
             if (!empty($pesanan_user))
             {
                 $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
-                return Inertia::render('Pesanan', [
-                    'title' => 'Pesanan',
-                    'data' => $data,
-                    'currentPage' => $page,
-                    'namabarang' => $barang,
-                    'token' => $token,
-                    'pesananCount' => $pesanan_detail->count()
-                ]);
+                if (!empty($pesanan_detail))
+                {
+                    return Inertia::render('Pesanan', [
+                        'title' => 'Pesanan',
+                        'data' => $data,
+                        'currentPage' => $page,
+                        'namabarang' => $barang,
+                        'token' => $token,
+                        'pesananCount' => $pesanan_detail->count()
+                    ]);                    
+                }
+                else
+                {
+                    return Inertia::render('Pesanan', [
+                        'title' => 'Pesanan',
+                        'data' => $data,
+                        'currentPage' => $page,
+                        'namabarang' => $barang,
+                        'token' => $token,
+                        'pesananCount' => 0
+                    ]);                    
+                }
             }
             else
             {
