@@ -31,7 +31,11 @@ class CheckoutController extends Controller
             else
             {
                 return Inertia::render('Checkout', [
-                    'title' => 'Checkout'
+                    'title' => 'Checkout',
+                    'pesanan_detail' => [],
+                    'pesanan' => 0,
+                    'pesananCount' => 0,
+                    'barangs' => $barangs
                 ]);            
             }
         }
@@ -39,5 +43,49 @@ class CheckoutController extends Controller
         {
             return redirect('/login');
         }
+    }
+
+    public function remove($id_pesanan_detail)
+    {
+        if (Auth::check())
+        {
+            $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
+            if (!empty($pesanan_user))
+            {
+                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->where('id_pesanan_detail', $id_pesanan_detail)->first();
+                
+                if (!empty($pesanan_detail))
+                {
+                    $harga_pesenan_update = $pesanan_user->jumlah_harga - $pesanan_detail->jumlah_harga;
+                    Pesanan::where('id_user', Auth::user()->id)->update(['jumlah_harga' => $harga_pesenan_update]);
+                    $pesanan_detail_delete = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->where('id_pesanan_detail', $id_pesanan_detail);
+                    $pesanan_detail_delete->delete();
+
+                    if (!$pesanan_detail->count())
+                    {
+                        $pesanan_user_delete = Pesanan::where('id_user', Auth::user()->id);
+                        $pesanan_user_delete->delete();    
+                    }
+                    return redirect('/checkout');   
+                }
+            }
+        }
+    }
+
+    public function checkout()
+    {
+        if (Auth::check())
+        {
+            $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
+            if (!empty($pesanan_user))
+            {
+                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan);
+                $pesanan_detail->delete();
+
+                $pesanan_user_delete = Pesanan::where('id_user', Auth::user()->id);
+                $pesanan_user_delete->delete();
+            }
+        }
+        return redirect('/');   
     }
 }

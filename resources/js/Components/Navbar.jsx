@@ -26,20 +26,20 @@ export default function Navbar({user, pesanan}) {
                 <li><Link href='/'>Home</Link></li>
                 <li><Link>About</Link></li>
                 </ul>
-                <Link href={route('checkout')} className='flex gap-2'>
+                <Link href={route('checkout')} className='flex'>
                     <img src={bag} alt="" className='h-8 mr-4 hidden lg:block '/>
                     {pesanan ?                
-                        <div className='badge badge-secondary -mx-4'>{pesanan}</div>
+                        <div className='badge badge-secondary badge-sm md:badge-md -mx-4'>{pesanan}</div>
                         :
                         ''
                     }
                 </Link>
             </div>
             <div className="navbar-end">
-                <Link href={route('checkout')} className='flex gap-2'>
+                <Link href={route('checkout')} className='flex mr-4'>
                     <img src={bag} alt="" className='h-8 mr-4 lg:hidden'/>
                     {pesanan ?                
-                        <div className='badge badge-secondary -mx-4 lg:hidden'>{pesanan}</div>
+                        <div className='badge badge-secondary badge-sm -mx-4 lg:hidden md:badge-md'>{pesanan}</div>
                         :
                         ''
                     }

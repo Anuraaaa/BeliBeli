@@ -34,14 +34,11 @@ export default function Checkout(props) {
     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 transition-opacity" />
     <div className="pointer-events-none fixed my-8 inset-y-16 sm:right-1/3 flex max-w-full bottom-8">
         <div className="pointer-events-auto w-screen max-w-md">
-          <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-            <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
-              <div className="flex items-start justify-between">
-                <div className="text-lg font-medium text-gray-900">Keranjang</div>
-                <div className="ml-3 flex h-7 items-center">
-                </div>
-              </div>
-
+          <div className="flex h-full flex-col bg-white shadow-xl">
+          <div className="border-b border-gray-200 py-4 px-4 sm:px-6">
+            <div className="text-lg font-medium text-gray-900">Keranjang</div>
+          </div>
+            <div className="flex-1 overflow-y-auto py-0 px-4 sm:px-6">
               <div className="mt-8">
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
@@ -72,12 +69,15 @@ export default function Checkout(props) {
                             <p className="text-gray-500">Jumlah: {pesanan.jumlah_pesanan}</p>
 
                             <div className="flex">
-                              <button
+                              <Link
+                                href={"/checkout=" + pesanan.id_pesanan_detail}
+                                method="delete"
+                                as="button"
                                 type="button"
                                 className="font-medium text-indigo-600 hover:text-indigo-500"
                               >
                                 Remove
-                              </button>
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -91,10 +91,10 @@ export default function Checkout(props) {
             <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
               <div className="flex justify-between text-base font-medium text-gray-900">
                 <p>Total Harga</p>
-                <p>{rupiah(props.pesanan.jumlah_harga)}</p>
+                <p>{!props.pesanan ? rupiah(0) : rupiah(props.pesanan.jumlah_harga)}</p>
               </div>
               <div className="mt-6">
-                <Link href="#" className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                <Link href="/checkout" method="delete" as="button" type="button" className="flex text-center items-center justify-center w-full rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
                   Checkout
                 </Link>
               </div>
