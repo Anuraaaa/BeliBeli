@@ -21,11 +21,22 @@ class BarangController extends Controller
             if (!empty($pesanan_user))
             {
                 $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
-                return Inertia::render('Barang', [
-                    'title' => 'Home',
-                    'barangs' => $barangs,
-                    'pesananCount' => $pesanan_detail->count()
-                ]);
+                if (!empty($pesanan_detail))
+                {
+                    return Inertia::render('Barang', [
+                        'title' => 'Home',
+                        'barangs' => $barangs,
+                        'pesananCount' => $pesanan_detail->count()
+                    ]);                    
+                }
+                else
+                {
+                    return Inertia::render('Barang', [
+                        'title' => 'Home',
+                        'barangs' => $barangs,
+                        'pesananCount' => 0
+                    ]);                    
+                }
             }
             else
             {
