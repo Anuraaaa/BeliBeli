@@ -47,4 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/store/product/add', [ProductStoreController::class, 'indexProductAdd']);
 });
 
+Route::get('storage/barang/{path}', function ($path) {
+    return response()->file(public_path("storage/barang/$path"));
+});
 require __DIR__.'/auth.php';
