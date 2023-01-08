@@ -3,8 +3,10 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import Header from '@/Components/Header';
 import Navbar from '@/Components/Navbar';
+import Shop from './Partials/StoreInformation';
 
 export default function ProfileEdit(props) {
+    console.log('Profile props', props);
     return (
         <>
         <Header title={props.title}/>
@@ -18,6 +20,10 @@ export default function ProfileEdit(props) {
 
                 <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <UpdatePasswordForm className="max-w-xl" />
+                </div>
+
+                <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <Shop store={props.store} className="max-w-xl" />
                 </div>
 
                 <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">

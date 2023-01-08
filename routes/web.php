@@ -6,6 +6,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\StoresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/store/add', [StoresController::class, 'addstore'])->name('store.add');
+    Route::patch('/store/edit', [StoresController::class, 'editstore'])->name('store.edit');
+    Route::delete('/store/delete', [StoresController::class, 'destroystore'])->name('store.destroy');
 });
 
 require __DIR__.'/auth.php';

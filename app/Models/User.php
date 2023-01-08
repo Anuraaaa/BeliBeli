@@ -39,4 +39,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pesanan::class, 'id_user');
     }
+
+    public function store()
+    {
+        return $this->hasOne(Stores::class, 'id_user');
+    }
 }
