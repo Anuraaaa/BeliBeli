@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use Inertia\Inertia;
 use App\Models\Pesanan;
-use Illuminate\Http\Request;
 use App\Models\PesananDetail;
 use Illuminate\Support\Facades\Auth;
 

@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Inertia\Inertia;
 use App\Models\Barang;
 use App\Models\Pesanan;
-use App\Models\PesananDetail;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\PesananDetail;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
 class PesananController extends Controller
 {
