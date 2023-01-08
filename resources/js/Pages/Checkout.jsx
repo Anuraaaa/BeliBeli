@@ -4,6 +4,8 @@ import Navbar from "@/Components/Navbar";
 import AllProduct from "@/Components/Product/AllProduct";
 import Paginate from "@/Components/Product/Paginate";
 import { Link } from "@inertiajs/inertia-react";
+import jquery from "jquery";
+import swal from 'sweetalert';
 
 const rupiah = (number)=>{
   return new Intl.NumberFormat("id-ID", {
@@ -14,6 +16,81 @@ const rupiah = (number)=>{
 
 export default function Checkout(props) {
   console.log('Checkout props: ', props)
+
+  jquery('#checkoutbyid').ready(function () {
+    jquery('#checkoutbyid').click(function() {
+      if (props.pesananCount != 0) {
+
+        props.pesanan_detail.map((pesanan) => {
+            swal({
+            title: `Apakah kamu yakin mau menghapus ${pesanan.nama_barang} ?`,
+            text: "Klik OK untuk lanjutkan",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          }).then((result) => {
+            if (result) {
+              swal({
+                title: "Sukses",
+                icon: "success",
+                text: `Kamu berhasil menghapus ${pesanan.nama_barang} di keranjang`
+              }).then((result) => {        
+                if (result) {
+                  jquery.ajax({
+                    method: 'POST',
+                    url: "/checkout=" + pesanan.id_pesanan_detail,
+                    data: {
+                      _token: props.token,
+                    },
+                    success: function() {
+                        window.location = '/checkout';
+                    }
+                  })
+                }
+              });
+            }
+          })
+        })
+      }
+    })
+  })
+
+  jquery('#checkoutall').ready(function() {
+    jquery('#checkoutall').click(function() {
+      if (props.pesananCount != 0) {
+        swal({
+          title: "Apakah kamu yakin?",
+          text: "Klik OK untuk konfirmasi checkout semua barang yang ada di keranjang",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((result) => {
+          if (result) {
+            swal({
+              title: "Sukses",
+              icon: "success",
+              text: "Kamu berhasil checkout semua barang yang ada di keranjang"
+            }).then((result) => {        
+              if (result) {
+                jquery.ajax({
+                  method: 'POST',
+                  url: '/checkout/all/',
+                  data: {
+                    _token: props.token,
+                  },
+                  success: function() {
+                      window.location = '/';
+                  }
+                })
+              }
+            });
+          }
+        });        
+      }
+    });
+  });
+  
   return (
     <>
     <Header title={props.title}/>
@@ -69,15 +146,10 @@ export default function Checkout(props) {
                             <p className="text-gray-500">Jumlah: {pesanan.jumlah_pesanan}</p>
 
                             <div className="flex">
-                              <Link
-                                href={"/checkout=" + pesanan.id_pesanan_detail}
-                                method="delete"
-                                as="button"
-                                type="button"
-                                className="font-medium text-indigo-600 hover:text-indigo-500"
-                              >
+
+                              <button id="checkoutbyid" href={"/checkout=" + pesanan.id_pesanan_detail} className="font-medium text-indigo-600 hover:text-indigo-500">
                                 Remove
-                              </Link>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -94,9 +166,9 @@ export default function Checkout(props) {
                 <p>{!props.pesanan ? rupiah(0) : rupiah(props.pesanan.jumlah_harga)}</p>
               </div>
               <div className="mt-6">
-                <Link href="/checkout" method="delete" as="button" type="button" className="flex text-center items-center justify-center w-full rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                <button id="checkoutall" className="flex text-center items-center justify-center w-full rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
                   Checkout
-                </Link>
+                </button>
               </div>
               <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                 <Link href="/" type="button" className="font-medium text-indigo-600 hover:text-indigo-500">

@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use Inertia\Inertia;
 use App\Models\Pesanan;
-use Illuminate\Http\Request;
 use App\Models\PesananDetail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    public function index ()
+    public function index (Request $request)
     {
         if (Auth::check())
         {
+            $token = $request->session()->token();
+            $token = csrf_token();
             $barangs = Barang::paginate(5);
             $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
             if (!empty($pesanan_user))
@@ -26,6 +28,7 @@ class CheckoutController extends Controller
                     'pesanan' => $pesanan_user,
                     'pesananCount' => $pesanan_detail->count(),
                     'barangs' => $barangs,
+                    'token' => $token
                 ]);
             }
             else
@@ -35,7 +38,8 @@ class CheckoutController extends Controller
                     'pesanan_detail' => [],
                     'pesanan' => 0,
                     'pesananCount' => 0,
-                    'barangs' => $barangs
+                    'barangs' => $barangs,
+                    'token' => $token
                 ]);            
             }
         }
@@ -56,8 +60,16 @@ class CheckoutController extends Controller
                 
                 if (!empty($pesanan_detail))
                 {
-                    $harga_pesenan_update = $pesanan_user->jumlah_harga - $pesanan_detail->jumlah_harga;
-                    Pesanan::where('id_user', Auth::user()->id)->update(['jumlah_harga' => $harga_pesenan_update]);
+                    $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
+                    $barang = Barang::where('id_barang', $pesanan_detail->id_barang)->first();
+    
+                    $stock_barang = $barang->stock + $pesanan_detail->jumlah_pesanan;
+    
+                    Barang::where('id_barang', $pesanan_detail->id_barang)->update(['stock' => $stock_barang]);          
+
+
+                    $harga_pesanan_update = $pesanan_user->jumlah_harga - $pesanan_detail->jumlah_harga;
+                    Pesanan::where('id_user', Auth::user()->id)->update(['jumlah_harga' => $harga_pesanan_update]);
                     $pesanan_detail_delete = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->where('id_pesanan_detail', $id_pesanan_detail);
                     $pesanan_detail_delete->delete();
 
@@ -78,12 +90,9 @@ class CheckoutController extends Controller
         {
             $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
             if (!empty($pesanan_user))
-            {
-                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan);
-                $pesanan_detail->delete();
-
-                $pesanan_user_delete = Pesanan::where('id_user', Auth::user()->id);
-                $pesanan_user_delete->delete();
+            {                
+                PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->delete();
+                Pesanan::where('id_user', Auth::user()->id)->delete();
             }
         }
         return redirect('/');   

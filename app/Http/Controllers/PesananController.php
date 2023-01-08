@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Inertia\Inertia;
 use App\Models\Barang;
 use App\Models\Pesanan;
-use App\Models\PesananDetail;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\PesananDetail;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PesananController extends Controller
 {
@@ -83,9 +82,28 @@ class PesananController extends Controller
             $tanggal = Carbon::now();
 
             //cek stok 
-            if ($request->jumlah_pesanan > $barang->stock)
+            if ($request->jumlah_pesanan > $barang->stock || $request->jumlah_pesanan <= 0 || $barang->stock <= 0)
             {
-                return redirect('/page='. $page. '/pesanan/'. $namabarang. '='. $id);
+                if ($barang->stock <= 0) {
+
+                    Alert::error('Error', 'Stock barang sudah habis');
+                    return redirect('/page='. $page. '/pesanan/'. $namabarang. '='. $id);
+                }
+                else if ($request->jumlah_pesanan > $barang->stock) {
+
+                    Alert::error('Error', 'Kamu tidak bisa memesan barang melebihi dari stock yang ada');
+                    return redirect('/page='. $page. '/pesanan/'. $namabarang. '='. $id);
+                }
+                else if ($request->jumlah_pesanan == 0) {
+                    
+                    Alert::error('Error', 'Kamu tidak bisa memesan barang sebanyak 0 buah');
+                    return redirect('/page='. $page. '/pesanan/'. $namabarang. '='. $id);
+                }
+                else if ($request->jumlah_pesanan < 0) {
+                    
+                    Alert::error('Error', 'Kamu tidak bisa memesan barang kurang dari stock yang ada');
+                    return redirect('/page='. $page. '/pesanan/'. $namabarang. '='. $id);
+                }
             }
 
             //cek pesanan jika sudah ada tidak perlu membuat baru, tapi menambahkan
@@ -114,6 +132,17 @@ class PesananController extends Controller
                 $pesanan_detail->harga_satuan_barang = $barang->harga;
                 $pesanan_detail->keterangan_barang = $barang->keterangan;
                 $pesanan_detail->save();
+
+                $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
+                if (!empty($pesanan_user))
+                {
+                    $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
+                    $barang = Barang::where('id_barang', $pesanan_detail->id_barang)->first();
+    
+                    $stock_barang = $barang->stock - $pesanan_detail->jumlah_pesanan;
+    
+                    Barang::where('id_barang', $pesanan_detail->id_barang)->update(['stock' => $stock_barang]);                
+                }
             }
             else
             {
@@ -131,11 +160,23 @@ class PesananController extends Controller
                     'harga_satuan_barang' => $pesanan_detail->harga_satuan_barang,
                     'keterangan_barang' => $pesanan_detail->keterangan_barang
                 ]);                
+
+                $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
+                if (!empty($pesanan_user))
+                {
+                    $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
+                    $barang = Barang::where('id_barang', $pesanan_detail->id_barang)->first();
+    
+                    $stock_barang = $barang->stock - $pesanan_detail->jumlah_pesanan;
+    
+                    Barang::where('id_barang', $pesanan_detail->id_barang)->update(['stock' => $stock_barang]);                
+                }
             }
             $pesanan_update = Pesanan::where('id_user', Auth::user()->id)->where('status_pesanan', 0)->first();
             $harga_pesanan_baru = $barang->harga * $request->jumlah_pesanan;
             $pesanan_update->jumlah_harga = $pesanan_update->jumlah_harga + $harga_pesanan_baru;
             Pesanan::where('id_user', Auth::user()->id)->where('status_pesanan', 0)->update(['jumlah_harga' => $pesanan_update->jumlah_harga]);
+            Alert::success('Sukses', 'Kamu berhasil menambahkan barang ini ke keranjang');
             return redirect('/');
         }
         else
