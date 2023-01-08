@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('harga');
             $table->integer('stock');
             $table->longText('keterangan');
+            $table->longText('image');
             $table->timestamps();
         });
     }
