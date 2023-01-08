@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pesanan;
+use App\Models\PesananDetail;
+use App\Models\Stores;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +22,34 @@ class ProfileController extends Controller
      */
     public function edit()
     {
+        $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
+        $store_user = Stores::where('id_user', Auth::user()->id)->first();
+        if (!empty($pesanan_user))
+        {            
+            $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
+
+            if (!empty($pesanan_detail))
+            {
+                return Inertia::render('Profile/Edit', [
+                    'title' => 'Profile',
+                    'pesananCount' => $pesanan_detail->count(),
+                    'store' => empty($store_user) ? 0: $store_user 
+                ]);
+            }
+            else
+            {
+                return Inertia::render('Profile/Edit', [
+                    'title' => 'Profile',
+                    'pesananCount' => 0,
+                    'store' => empty($store_user) ? 0: $store_user 
+                ]);                
+            }
+        }
         return Inertia::render('Profile/Edit', [
-            'title' => 'Profile'
-        ]);
+            'title' => 'Profile',
+            'pesananCount' => 0,
+            'store' => empty($store_user) ? 0: $store_user 
+        ]);                
     }
 
     public function update(Request $request)
