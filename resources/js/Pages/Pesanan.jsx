@@ -1,6 +1,5 @@
 import Header from '@/Components/Header';
 import Navbar from '@/Components/Navbar';
-import TextInput from '@/Components/TextInput';
 import { Link } from '@inertiajs/inertia-react';
 
 const rupiah = (number)=>{

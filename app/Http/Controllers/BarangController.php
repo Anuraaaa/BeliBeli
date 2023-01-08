@@ -6,9 +6,7 @@ use Inertia\Inertia;
 use App\Models\Barang;
 use App\Models\Pesanan;
 use App\Models\PesananDetail;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 
 class BarangController extends Controller
 {
