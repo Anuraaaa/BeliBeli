@@ -6,6 +6,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProductStoreController;
 use App\Http\Controllers\StoresController;
 
 /*
@@ -38,6 +39,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/store/add', [StoresController::class, 'addstore'])->name('store.add');
     Route::patch('/store/edit', [StoresController::class, 'editstore'])->name('store.edit');
     Route::delete('/store/delete', [StoresController::class, 'destroystore'])->name('store.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/store/product', [ProductStoreController::class, 'indexMain'])->name('store.product.main');
+    Route::get('/store/product/view', [ProductStoreController::class, 'indexProductView'])->name('store.product.view');
+    Route::post('/store/product/add', [ProductStoreController::class, 'indexProductAdd']);
 });
 
 require __DIR__.'/auth.php';

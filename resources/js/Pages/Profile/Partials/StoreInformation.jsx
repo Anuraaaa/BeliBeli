@@ -5,7 +5,7 @@ import InputLabel from '@/Components/InputLabel';
 import Modal from '@/Components/Modal';
 import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
-import { useForm, usePage } from '@inertiajs/inertia-react';
+import { Link, useForm, usePage } from '@inertiajs/inertia-react';
 import PrimaryButton from '@/Components/PrimaryButton';
 
 const rupiah = (number)=>{
@@ -175,6 +175,10 @@ const rupiah = (number)=>{
 
                             <div className="mt-6 flex justify-end">
                                 <SecondaryButton onClick={closeModalUpdate}>Cancel</SecondaryButton>
+
+                                <Link href={route('store.product.main')} className="ml-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    Update Product
+                                </Link>
 
                                 <PrimaryButton className="ml-3" processing={processing}>
                                     Update Store
