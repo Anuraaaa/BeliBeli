@@ -18,6 +18,7 @@ class BarangFactory extends Factory
     {
         return [
             'nama_barang' => fake()->randomElement(['Baju', 'Celana', 'Sepatu', 'Sendal', 'Topi', 'Kaos Kaki', 'Kalung', 'Gelang', 'Tas']),
+            'id_store' => fake()->randomNumber(),
             'harga' => fake()->randomNumber(),
             'stock' => fake()->randomNumber(),
             'keterangan' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto sequi dolores quibusdam debitis provident asperiores quaerat tempore, reiciendis quidem alias. Tempora esse quasi quidem.'
