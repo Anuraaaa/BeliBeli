@@ -28,6 +28,9 @@ class LoginController extends Controller
 
      public function authenticate(LoginRequest $request)
     {
+        $token = $request->session()->token();
+        $token = csrf_token();
+
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -40,7 +43,8 @@ class LoginController extends Controller
         }
         return Inertia::render('Login', [
             'title' => 'Login', 
-            'error' =>'Login Error!'
+            'error' =>'Login Error!',
+            'token' => $token
         ]);
     }
     public function logout(Request $request)
