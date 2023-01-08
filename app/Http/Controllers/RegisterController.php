@@ -38,7 +38,7 @@ class RegisterController extends Controller
         $request->validate([
             'nama_lengkap' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users',
-            'email' => 'required|email:dns|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required_with:repassword|same:repassword|min:5|max:255',
             'repassword' => 'required|min:5|max:255',
             'checkbox' => 'required'
