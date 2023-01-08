@@ -1,7 +1,8 @@
 <?php
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PasswordController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisterController::class, 'index'])
@@ -16,6 +17,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+
+    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::post('logout', [LoginController::class, 'logout'])
                 ->name('logout');

@@ -62,6 +62,9 @@ export default function Navbar({user, pesanan}) {
                                         </a>
                                     </li>
                                     <li>
+                                        <Link href={route('profile.edit')} as='button' type='button' className='text-xs'>Profile</Link>
+                                    </li>
+                                    <li>
                                         <Link href={route('logout')} method='post' as='button' type='button' className='text-xs'>Logout</Link>
                                     </li>
                                     </>                         
@@ -73,6 +76,9 @@ export default function Navbar({user, pesanan}) {
                                         </a>
                                     </li>
                                     <hr />
+                                    <li>
+                                        <Link href={route('profile.edit')} as='button' type='button' className='text-xs'>Profile</Link>
+                                    </li>
                                     <li>
                                         <Link href={route('logout')} method='post' as='button' type='button' className='text-xs'>Logout</Link>
                                     </li>
