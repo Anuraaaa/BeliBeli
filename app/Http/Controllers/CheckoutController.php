@@ -6,14 +6,17 @@ use App\Models\Barang;
 use Inertia\Inertia;
 use App\Models\Pesanan;
 use App\Models\PesananDetail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    public function index ()
+    public function index (Request $request)
     {
         if (Auth::check())
         {
+            $token = $request->session()->token();
+            $token = csrf_token();
             $barangs = Barang::paginate(5);
             $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
             if (!empty($pesanan_user))
@@ -25,6 +28,7 @@ class CheckoutController extends Controller
                     'pesanan' => $pesanan_user,
                     'pesananCount' => $pesanan_detail->count(),
                     'barangs' => $barangs,
+                    'token' => $token
                 ]);
             }
             else
@@ -34,7 +38,8 @@ class CheckoutController extends Controller
                     'pesanan_detail' => [],
                     'pesanan' => 0,
                     'pesananCount' => 0,
-                    'barangs' => $barangs
+                    'barangs' => $barangs,
+                    'token' => $token
                 ]);            
             }
         }
