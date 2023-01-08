@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
 import logo from '/public/img/mainblibli.png';
 import bag from '/public/img/bag.png';
+import profile from '/public/img/profile.png'
 
 export default function Navbar({user, pesanan}) {
     console.log("pesanancount: ", pesanan)
@@ -48,10 +49,8 @@ export default function Navbar({user, pesanan}) {
                     (
                         <>
                             <div className="dropdown dropdown-end">
-                                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                                    <div className="w-10 rounded-full">
-                                    <img src="https://placeimg.com/80/80/people" />
-                                    </div>
+                                <label tabIndex={0}>
+                                    <img src={profile} className='btn btn-ghost btn-circle avatar h-12 rounded-full'/>
                                 </label>
                                 <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                                     {user.nama_lengkap.length >= 16 ?
