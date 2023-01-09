@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->integer('harga_satuan_barang');
             $table->string('keterangan_barang');
+            $table->longText('image_barang');
             $table->integer('id_pesanan');
             $table->integer('jumlah_pesanan');
             $table->integer('jumlah_harga');
