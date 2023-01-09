@@ -12,8 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductStoreController extends Controller
 {
-    public function indexMain()
+    public function indexMain(Request $request)
     {
+        $token = $request->session()->token();
+        $token = csrf_token();
         $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
         $store_user = Stores::where('id_user', Auth::user()->id)->first();
         $barangs = Barang::where('id_store', $store_user->id_store)->get();
@@ -28,7 +30,8 @@ class ProductStoreController extends Controller
                     'pesanan' => $pesanan_user,
                     'pesananCount' => empty($pesanan_detail) ? 0 : $pesanan_detail->count(),
                     'store' => empty($store_user) ? 0: $store_user,
-                    'barangs' => $barangs
+                    'barangs' => $barangs,
+                    'token' => $token
                 ]);
             }
             else
@@ -39,7 +42,8 @@ class ProductStoreController extends Controller
                     'pesanan' => 0,
                     'pesananCount' => 0,
                     'store' => empty($store_user) ? 0: $store_user,
-                    'barangs' => $barangs
+                    'barangs' => $barangs,
+                    'token' => $token
                 ]);                
             }
         }
@@ -49,7 +53,8 @@ class ProductStoreController extends Controller
             'pesanan' => 0,
             'pesananCount' => 0,
             'store' => empty($store_user) ? 0: $store_user,
-            'barangs' => $barangs 
+            'barangs' => $barangs, 
+            'token' => $token
         ]);                
     }
     
@@ -127,5 +132,35 @@ class ProductStoreController extends Controller
 
         }
         return redirect()->route('store.product.main');
+    }
+    
+    public function indexProductDelete($id_barang)
+    {
+        if (Auth::check())
+        {
+            $store = Stores::where('id_user', Auth::user()->id)->first();
+    
+            if (!empty($store))
+            {
+                $pesanan_detail = PesananDetail::where('id_barang', $id_barang)->get();
+                
+                if (!empty($pesanan_detail))
+                {
+                    $pesanan_user = Pesanan::where('id_pesanan', $pesanan_detail->id_pesanan);
+    
+                    $pesanan_user->jumlah_harga = $pesanan_user->jumlah_harga - $pesanan_detail->jumlah_harga;
+                    Pesanan::where('id_pesanan', $pesanan_detail->id_pesanan)->update(['jumlah_harga' => $pesanan_user->jumlah_harga]);
+    
+                    PesananDetail::where('id_barang', $id_barang)->delete();
+                    Barang::where('id_store', $store->id_store)->where('id_barang', $id_barang)->delete();
+                    
+                }
+                else
+                {
+                    Barang::where('id_store', $store->id_store)->where('id_barang', $id_barang)->delete();
+                }
+            }
+            return redirect('/store/product/');   
+        }
     }
 }
