@@ -2,7 +2,6 @@ import { Link } from "@inertiajs/inertia-react";
 
 
 const isPaginate = (page) => {
-    console.log('paginate props', page)
     const prev = page.links[0].url;
     const next = page.links[page.links.length - 1].url;
     const current = page.current_page;

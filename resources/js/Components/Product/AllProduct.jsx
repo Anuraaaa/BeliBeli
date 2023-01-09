@@ -10,7 +10,6 @@ const rupiah = (number)=>{
   
   
   const isProduct = (products, page) => {
-    console.log('isProduct props', products, page.current_page)
     
     return products.map((data, i) => {
         return (

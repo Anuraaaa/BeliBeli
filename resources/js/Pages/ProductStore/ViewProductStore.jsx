@@ -16,12 +16,10 @@ const rupiah = (number)=>{
   }
   
   export default function ViewProductStore (props) {
-    console.log('ProductStore props: ', props);
 
     props.barangs.map((product) => {
         jquery(`#removeby${product.id_barang}`).ready(function () {
           jquery(`#removeby${product.id_barang}`).click(function () {
-              console.log('product map: ', product);
               swal({
                 title: `Apakah kamu yakin mau menghapus ${product.nama_barang} ?`,
                 text: "Klik OK untuk lanjutkan",
