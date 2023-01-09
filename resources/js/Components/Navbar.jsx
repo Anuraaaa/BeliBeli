@@ -5,7 +5,6 @@ import bag from '/public/img/bag.png';
 import profile from '/public/img/profile.png'
 
 export default function Navbar({user, pesanan}) {
-    console.log("pesanancount: ", pesanan)
     return (
         <>
             <div className="navbar bg-blue-500">

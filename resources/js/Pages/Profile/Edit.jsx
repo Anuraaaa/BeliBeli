@@ -6,7 +6,6 @@ import Navbar from '@/Components/Navbar';
 import Shop from './Partials/StoreInformation';
 
 export default function ProfileEdit(props) {
-    console.log('Profile props', props);
     return (
         <>
         <Header title={props.title}/>

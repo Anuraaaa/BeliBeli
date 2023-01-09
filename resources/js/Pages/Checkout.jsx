@@ -15,7 +15,6 @@ const rupiah = (number)=>{
 }
 
 export default function Checkout(props) {
-  console.log('Checkout props: ', props)
   
   props.pesanan_detail.map((pesanan) => {
     jquery(`#checkoutby${pesanan.id_pesanan_detail}`).ready(function() {

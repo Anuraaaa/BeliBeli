@@ -22,49 +22,55 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
-        $store_user = Stores::where('id_user', Auth::user()->id)->first();
-        if (!empty($pesanan_user))
-        {            
-            $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->get();
-            if (!empty($pesanan_detail))
-            {
-                return Inertia::render('Profile/Edit', [
-                    'title' => 'Profile',
-                    'pesananCount' => $pesanan_detail->count(),
-                    'store' => empty($store_user) ? 0: $store_user 
-                ]);
+        if (Auth::check())
+        {
+            $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
+            $store_user = Stores::where('id_user', Auth::user()->id)->first();
+            if (!empty($pesanan_user))
+            {            
+                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->get();
+                if (!empty($pesanan_detail))
+                {
+                    return Inertia::render('Profile/Edit', [
+                        'title' => 'Profile',
+                        'pesananCount' => $pesanan_detail->count(),
+                        'store' => empty($store_user) ? 0: $store_user 
+                    ]);
+                }
+                else
+                {
+                    return Inertia::render('Profile/Edit', [
+                        'title' => 'Profile',
+                        'pesananCount' => 0,
+                        'store' => empty($store_user) ? 0: $store_user 
+                    ]);                
+                }
             }
-            else
-            {
-                return Inertia::render('Profile/Edit', [
-                    'title' => 'Profile',
-                    'pesananCount' => 0,
-                    'store' => empty($store_user) ? 0: $store_user 
-                ]);                
-            }
+            return Inertia::render('Profile/Edit', [
+                'title' => 'Profile',
+                'pesananCount' => 0,
+                'store' => empty($store_user) ? 0: $store_user 
+            ]);                
         }
-        return Inertia::render('Profile/Edit', [
-            'title' => 'Profile',
-            'pesananCount' => 0,
-            'store' => empty($store_user) ? 0: $store_user 
-        ]);                
     }
 
     public function update(Request $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'email' => 'required'
-        ]);
-
-        User::where('id', Auth::user()->id)->update([
-            'username' => $request->username,
-            'email' => $request->email
-        ]);
-
-        Alert::success('Sukses', 'Kamu berhasil memperbarui profile');
-        return Redirect::route('profile.edit');
+        if (Auth::check())
+        {
+            $request->validate([
+                'username' => 'required',
+                'email' => 'required'
+            ]);
+    
+            User::where('id', Auth::user()->id)->update([
+                'username' => $request->username,
+                'email' => $request->email
+            ]);
+    
+            Alert::success('Sukses', 'Kamu berhasil memperbarui profile');
+            return Redirect::route('profile.edit');
+        }
     }
 
     /**
@@ -75,19 +81,22 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request)
     {
-        $request->validate([
-            'password' => ['required', 'current-password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        if (Auth::check())
+        {
+            $request->validate([
+                'password' => ['required', 'current-password'],
+            ]);
+    
+            $user = $request->user();
+    
+            Auth::logout();
+    
+            $user->delete();
+    
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+    
+            return Redirect::to('/');
+        }
     }
 }
