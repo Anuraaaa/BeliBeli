@@ -12,13 +12,13 @@ class BarangController extends Controller
 {
     public function index ()
     {
-        $barangs = Barang::paginate(5);
         if (Auth::check())
         {
+            $barangs = Barang::paginate(5);
             $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
             if (!empty($pesanan_user))
             {
-                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
+                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->get();
                 if (!empty($pesanan_detail))
                 {
                     return Inertia::render('Barang', [
@@ -47,6 +47,7 @@ class BarangController extends Controller
         }
         else
         {
+            $barangs = Barang::paginate(5);
             return Inertia::render('Barang', [
                 'title' => 'Home',
                 'barangs' => $barangs,
