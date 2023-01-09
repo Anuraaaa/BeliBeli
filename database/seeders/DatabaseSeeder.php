@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
             'username' => "anwar",
             'email' => "admin@gmail.com",
             'password' => Hash::make('admin'), // password
-            'type_user' => fake()->randomElement(['tamu', 'pembeli', 'penjual']),
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now()
