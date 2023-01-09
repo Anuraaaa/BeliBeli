@@ -10,13 +10,10 @@ class Pesanan extends Model
 {
     use HasFactory;
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_user');
-    }
-
-    public function pesanan_detail()
-    {
-        return $this->hasMany(PesananDetail::class, 'id_pesanan');
-    }
+    protected $fillable = [
+        'id_user',
+        'tanggal_pesanan',
+        'jumlah_harga',
+        'status_pesanan'    
+    ];
 }

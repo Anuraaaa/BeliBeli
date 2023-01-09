@@ -24,7 +24,7 @@ class PesananController extends Controller
             $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
             if (!empty($pesanan_user))
             {
-                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
+                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->get();
                 if (!empty($pesanan_detail))
                 {
                     return Inertia::render('Pesanan', [
@@ -131,6 +131,7 @@ class PesananController extends Controller
                 $pesanan_detail->nama_barang = $barang->nama_barang;
                 $pesanan_detail->harga_satuan_barang = $barang->harga;
                 $pesanan_detail->keterangan_barang = $barang->keterangan;
+                $pesanan_detail->image_barang = $barang->image;
                 $pesanan_detail->save();
 
                 $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
@@ -147,12 +148,18 @@ class PesananController extends Controller
             else
             {
                 $pesanan_detail = PesananDetail::where('id_barang', $barang->id_barang)->where('id_pesanan', $pesanan_baru->id_pesanan)->first();
-                $pesanan_detail->jumlah_pesanan = $request->jumlah_pesanan + $request->jumlah_pesanan;
+                $pesanan_detail->jumlah_pesanan = $pesanan_detail->jumlah_pesanan + $request->jumlah_pesanan;
                 $harga_detail_baru = $barang->harga * $request->jumlah_pesanan;
                 $pesanan_detail->jumlah_harga = $pesanan_detail->jumlah_harga + $harga_detail_baru;
                 $pesanan_detail->nama_barang = $barang->nama_barang;
                 $pesanan_detail->harga_satuan_barang = $barang->harga;
                 $pesanan_detail->keterangan_barang = $barang->keterangan;
+
+                $barang = Barang::where('id_barang', $pesanan_detail->id_barang)->first();
+                $stock_barang = $barang->stock - $request->jumlah_pesanan;
+                Barang::where('id_barang', $pesanan_detail->id_barang)->update(['stock' => $stock_barang]);                
+
+
                 PesananDetail::where('id_barang', $barang->id_barang)->where('id_pesanan', $pesanan_baru->id_pesanan)->update([
                     'jumlah_harga' => $pesanan_detail->jumlah_harga, 
                     'jumlah_pesanan' => $pesanan_detail->jumlah_pesanan,
@@ -160,17 +167,6 @@ class PesananController extends Controller
                     'harga_satuan_barang' => $pesanan_detail->harga_satuan_barang,
                     'keterangan_barang' => $pesanan_detail->keterangan_barang
                 ]);                
-
-                $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
-                if (!empty($pesanan_user))
-                {
-                    $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
-                    $barang = Barang::where('id_barang', $pesanan_detail->id_barang)->first();
-    
-                    $stock_barang = $barang->stock - $pesanan_detail->jumlah_pesanan;
-    
-                    Barang::where('id_barang', $pesanan_detail->id_barang)->update(['stock' => $stock_barang]);                
-                }
             }
             $pesanan_update = Pesanan::where('id_user', Auth::user()->id)->where('status_pesanan', 0)->first();
             $harga_pesanan_baru = $barang->harga * $request->jumlah_pesanan;

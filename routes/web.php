@@ -45,7 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/store/product', [ProductStoreController::class, 'indexMain'])->name('store.product.main');
     Route::get('/store/product/view', [ProductStoreController::class, 'indexProductView'])->name('store.product.view');
     Route::post('/store/product/add', [ProductStoreController::class, 'indexProductAdd']);
+    Route::post('/store/product/delete={id_barang}', [ProductStoreController::class, 'indexProductDelete']);
 });
+
 
 Route::get('storage/barang/{path}', function ($path) {
     return response()->file(public_path("storage/barang/$path"));

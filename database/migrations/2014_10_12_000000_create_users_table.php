@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('username', 24);
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('type_user', ['tamu', 'pembeli', 'penjual'])->default('pembeli');
             $table->rememberToken();
             $table->timestamps();
         });

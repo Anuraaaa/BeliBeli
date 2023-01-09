@@ -18,43 +18,43 @@ const rupiah = (number)=>{
   export default function ViewProductStore (props) {
     console.log('ProductStore props: ', props);
 
-    jquery('#checkoutbyid').ready(function () {
-        jquery('#checkoutbyid').click(function() {
-          if (props.pesananCount != 0) {
-    
-            props.pesanan_detail.map((pesanan) => {
-                swal({
-                title: `Apakah kamu yakin mau menghapus ${pesanan.nama_barang} ?`,
+    props.barangs.map((product) => {
+        jquery(`#removeby${product.id_barang}`).ready(function () {
+          jquery(`#removeby${product.id_barang}`).click(function () {
+              console.log('product map: ', product);
+              swal({
+                title: `Apakah kamu yakin mau menghapus ${product.nama_barang} ?`,
                 text: "Klik OK untuk lanjutkan",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-              }).then((result) => {
-                if (result) {
+              }).then(result => {
+                if (result)
+                {                    
                   swal({
                     title: "Sukses",
                     icon: "success",
-                    text: `Kamu berhasil menghapus ${pesanan.nama_barang} di keranjang`
-                  }).then((result) => {        
-                    if (result) {
+                    text: `Kamu berhasil menghapus ${product.nama_barang} dari store`
+                  }).then((result) => {
+                    if (result)
+                    {
                       jquery.ajax({
-                        method: 'POST',
-                        url: "/checkout=" + pesanan.id_pesanan_detail,
+                        method: 'post',
+                        url: "/store/product/delete=" + product.id_barang,
                         data: {
                           _token: props.token,
                         },
                         success: function() {
-                            window.location = '/checkout';
+                            window.location = '/store/product';
                         }
-                      })
+                      });
                     }
                   });
-                }
-              })
-            })
-          }
-        })
-      })
+                }                
+              });
+          })
+        })      
+    })
           
       return (
         <>
@@ -102,7 +102,7 @@ const rupiah = (number)=>{
     
                             <div className="ml-4 flex flex-1 flex-col">
                               <div>
-                                <div className="flex justify-between text-base font-medium font-bold">
+                                <div className="flex justify-between text-base font-bold">
                                   <h1>{product.nama_barang}</h1>
                                 </div>
                                 <div className="flex flex-1 items-end justify-between text-sm font-bold">                              
@@ -128,7 +128,7 @@ const rupiah = (number)=>{
     
                                 <div className="flex">
     
-                                  <button id="checkoutbyid"  className="font-medium text-indigo-600 hover:text-indigo-500">
+                                  <button id={"removeby" + product.id_barang}  className="font-medium text-indigo-600 hover:text-indigo-500">
                                     Remove
                                   </button>
                                 </div>

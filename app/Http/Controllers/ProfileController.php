@@ -26,8 +26,7 @@ class ProfileController extends Controller
         $store_user = Stores::where('id_user', Auth::user()->id)->first();
         if (!empty($pesanan_user))
         {            
-            $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
-
+            $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->get();
             if (!empty($pesanan_detail))
             {
                 return Inertia::render('Profile/Edit', [
