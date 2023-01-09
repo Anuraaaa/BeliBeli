@@ -60,49 +60,44 @@ class ProductStoreController extends Controller
     
     public function indexProductView(Request $request)
     {
-        $token = $request->session()->token();
-        $token = csrf_token();
-
-        $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
-        $store_user = Stores::where('id_user', Auth::user()->id)->first();
-        $barangs = Barang::where('id_store', $store_user->id_store);
-        if (!empty($barangs))
+        if (Auth::check())
         {
-            if (!empty($pesanan_user))
-            {            
-                $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->get();
-                return Inertia::render('ProductStore/AddProductStore', [
-                    'title' => 'Product',
-                    'pesanan_detail' => $pesanan_detail,
-                    'pesanan' => $pesanan_user,
-                    'pesananCount' => empty($pesanan_detail) ? 0 : $pesanan_detail->count(),
-                    'store' => empty($store_user) ? 0: $store_user,
-                    'barangs' => $barangs,
-                    'token' => $token
-                ]);
-            }
-            else
+
+            $token = $request->session()->token();
+            $token = csrf_token();
+    
+            $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
+            $store_user = Stores::where('id_user', Auth::user()->id)->first();
+            $barangs = Barang::where('id_store', $store_user->id_store)->get();
+            if (!empty($barangs))
             {
-                return Inertia::render('ProductStore/AddProductStore', [
-                    'title' => 'Product',
-                    'pesanan_detail' => [],
-                    'pesanan' => 0,
-                    'pesananCount' => 0,
-                    'store' => empty($store_user) ? 0: $store_user,
-                    'barangs' => $barangs,
-                    'token' => $token
-                ]);                
+                if (!empty($pesanan_user))
+                {            
+                    $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->get();
+                    return Inertia::render('ProductStore/AddProductStore', [
+                        'title' => 'Product',
+                        'pesanan_detail' => $pesanan_detail,
+                        'pesanan' => $pesanan_user,
+                        'pesananCount' => empty($pesanan_detail) ? 0 : $pesanan_detail->count(),
+                        'store' => empty($store_user) ? 0: $store_user,
+                        'barangs' => $barangs,
+                        'token' => $token
+                    ]);
+                }
+                else
+                {
+                    return Inertia::render('ProductStore/AddProductStore', [
+                        'title' => 'Product',
+                        'pesanan_detail' => [],
+                        'pesanan' => 0,
+                        'pesananCount' => 0,
+                        'store' => empty($store_user) ? 0: $store_user,
+                        'barangs' => [],
+                        'token' => $token
+                    ]);                
+                }
             }
         }
-        return Inertia::render('ProductStore/AddProductStore', [
-            'title' => 'Profile',
-            'pesanan_detail' => [],
-            'pesanan' => 0,
-            'pesananCount' => 0,
-            'store' => empty($store_user) ? 0: $store_user,
-            'barangs' => $barangs,
-            'token' => $token
-        ]);                
     }
 
     public function indexProductAdd(Request $request)
@@ -142,11 +137,11 @@ class ProductStoreController extends Controller
     
             if (!empty($store))
             {
-                $pesanan_detail = PesananDetail::where('id_barang', $id_barang)->get();
+                $pesanan_detail = PesananDetail::where('id_barang', $id_barang)->first();
                 
                 if (!empty($pesanan_detail))
                 {
-                    $pesanan_user = Pesanan::where('id_pesanan', $pesanan_detail->id_pesanan);
+                    $pesanan_user = Pesanan::where('id_pesanan', $pesanan_detail->id_pesanan)->first();
     
                     $pesanan_user->jumlah_harga = $pesanan_user->jumlah_harga - $pesanan_detail->jumlah_harga;
                     Pesanan::where('id_pesanan', $pesanan_detail->id_pesanan)->update(['jumlah_harga' => $pesanan_user->jumlah_harga]);

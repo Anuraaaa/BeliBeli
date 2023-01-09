@@ -16,42 +16,39 @@ const rupiah = (number)=>{
 
 export default function Checkout(props) {
   console.log('Checkout props: ', props)
-
-  jquery('#checkoutbyid').ready(function () {
-    jquery('#checkoutbyid').click(function() {
-      if (props.pesananCount != 0) {
-
-        props.pesanan_detail.map((pesanan) => {
+  
+  props.pesanan_detail.map((pesanan) => {
+    jquery(`#checkoutby${pesanan.id_pesanan_detail}`).ready(function() {
+      jquery(`#checkoutby${pesanan.id_pesanan_detail}`).click(function() {
+          swal({
+          title: `Apakah kamu yakin mau menghapus ${pesanan.nama_barang} ?`,
+          text: "Klik OK untuk lanjutkan",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        }).then((result) => {
+          if (result) {
             swal({
-            title: `Apakah kamu yakin mau menghapus ${pesanan.nama_barang} ?`,
-            text: "Klik OK untuk lanjutkan",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          }).then((result) => {
-            if (result) {
-              swal({
-                title: "Sukses",
-                icon: "success",
-                text: `Kamu berhasil menghapus ${pesanan.nama_barang} di keranjang`
-              }).then((result) => {        
-                if (result) {
-                  jquery.ajax({
-                    method: 'POST',
-                    url: "/checkout=" + pesanan.id_pesanan_detail,
-                    data: {
-                      _token: props.token,
-                    },
-                    success: function() {
-                        window.location = '/checkout';
-                    }
-                  })
-                }
-              });
-            }
-          })
+              title: "Sukses",
+              icon: "success",
+              text: `Kamu berhasil menghapus ${pesanan.nama_barang} di keranjang`
+            }).then((result) => {        
+              if (result) {
+                jquery.ajax({
+                  method: 'POST',
+                  url: "/checkout=" + pesanan.id_pesanan_detail,
+                  data: {
+                    _token: props.token,
+                  },
+                  success: function() {
+                      window.location = '/checkout';
+                  }
+                })
+              }
+            });
+          }
         })
-      }
+      })
     })
   })
 
@@ -147,7 +144,7 @@ export default function Checkout(props) {
 
                             <div className="flex">
 
-                              <button id="checkoutbyid" className="font-medium text-indigo-600 hover:text-indigo-500">
+                              <button id={"checkoutby" + pesanan.id_pesanan_detail} className="font-medium text-indigo-600 hover:text-indigo-500">
                                 Remove
                               </button>
                             </div>
