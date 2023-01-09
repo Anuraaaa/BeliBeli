@@ -17,7 +17,6 @@ return new class extends Migration
             $table->bigIncrements('id_store');
             $table->integer('id_user')->nullable();
             $table->string('nama_store');
-            $table->integer('store_bank')->nullable();
             $table->timestamps();
         });
     }
