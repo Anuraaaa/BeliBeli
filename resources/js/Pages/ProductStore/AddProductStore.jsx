@@ -7,7 +7,6 @@ import Shop from '@/Pages/Profile/Partials/StoreInformation';
 import { Link } from "@inertiajs/inertia-react";
 
 export default function AddProductStore (props) {
-    console.log('AddProductStore props', props);
     return (
         <>
         <Header title={props.title}/>

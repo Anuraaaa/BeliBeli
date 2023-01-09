@@ -10,7 +10,6 @@ const rupiah = (number)=>{
   }
 
   export default function Pesanan (props) {
-    console.log('Pesanan props', props)
     return (
         <>
         <Header title={props.title}/> 

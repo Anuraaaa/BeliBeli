@@ -6,7 +6,6 @@ import Paginate from '@/Components/Product/Paginate'
 import React from 'react'
 
 export default function Welcome(props) {
-    console.log('welcome props:', props);
     return (
         <>
         <Header title={props.title}/>
