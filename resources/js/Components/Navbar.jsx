@@ -16,7 +16,7 @@ export default function Navbar({user, pesanan}) {
                 </label>
                 <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-black">
                     <li><Link href='/'>Home</Link></li>
-                    <li><a>About</a></li>
+                    <li><Link href='/about'>About</Link></li>
                 </ul>
                 </div>
                 <Link href='/'><img src={logo} alt="" className='h-8' /></Link>
@@ -25,7 +25,7 @@ export default function Navbar({user, pesanan}) {
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-white font-bold">
                 <li><Link href='/'>Home</Link></li>
-                <li><Link>About</Link></li>
+                <li><Link href='/about'>About</Link></li>
                 </ul>
                 <Link href={route('checkout')} className='flex'>
                     <img src={bag} alt="" className='h-8 mr-4 hidden lg:block '/>
