@@ -143,7 +143,6 @@ const rupiah = (number)=>{
                             Update your store in here
                         </p>
                         <p className='text-sm text-gray-600'>Store Name: {store.nama_store}</p>
-                        <p className='text-sm text-gray-600'>Store Bank: {store.bank == null ? rupiah(0) : rupiah(store.bank)}</p>                        
                     </header>
 
                     <PrimaryButton onClick={confirmUserUpdateStore}>Update Store</PrimaryButton>

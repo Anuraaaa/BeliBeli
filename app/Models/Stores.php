@@ -12,7 +12,6 @@ class Stores extends Model
 
     protected $fillable = [
         'nama_store',
-        'id_user',
-        'store_bank'
+        'id_user'
     ];
 }
