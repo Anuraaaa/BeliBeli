@@ -15,8 +15,4 @@ class Stores extends Model
         'id_user',
         'store_bank'
     ];
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_user');
-    }
 }

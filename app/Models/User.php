@@ -34,14 +34,4 @@ class User extends Authenticatable
         'password',
         'remember_token'
     ];
-
-    public function pesanan()
-    {
-        return $this->hasMany(Pesanan::class, 'id_user');
-    }
-
-    public function store()
-    {
-        return $this->hasOne(Stores::class, 'id_user');
-    }
 }
