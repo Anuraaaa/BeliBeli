@@ -26,7 +26,7 @@ Route::get('/about', [AboutController::class, 'index']);
 Route::get('/page={page}/pesanan/{barang}={id}', [PesananController::class, 'index']);
 Route::post('/page={page}/pesanan/{barang}={id}', [PesananController::class, 'pesan']);
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-Route::post('/checkout/all/', [CheckoutController::class, 'checkout']);
+Route::post('/checkout/all', [CheckoutController::class, 'checkout']);
 Route::post('/checkout={id_barang_detail}', [CheckoutController::class, 'remove']);
 
 Route::middleware('auth')->group(function () {
