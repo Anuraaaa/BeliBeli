@@ -71,7 +71,7 @@ export default function Checkout(props) {
               if (result) {
                 jquery.ajax({
                   method: 'POST',
-                  url: '/checkout/all/',
+                  url: '/checkout/all',
                   data: {
                     _token: props.token,
                   },
