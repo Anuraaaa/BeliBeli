@@ -137,8 +137,8 @@ class PesananController extends Controller
                 $pesanan_user = Pesanan::where('id_user', Auth::user()->id)->first();
                 if (!empty($pesanan_user))
                 {
-                    $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
-                    $barang = Barang::where('id_barang', $pesanan_detail->id_barang)->first();
+                    $barang = Barang::where('id_barang', $id)->first();
+                    $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->where('id_barang', $id)->first();
     
                     $stock_barang = $barang->stock - $pesanan_detail->jumlah_pesanan;
     

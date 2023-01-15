@@ -60,7 +60,6 @@ class CheckoutController extends Controller
                 
                 if (!empty($pesanan_detail))
                 {
-                    $pesanan_detail = PesananDetail::where('id_pesanan', $pesanan_user->id_pesanan)->first();
                     $barang = Barang::where('id_barang', $pesanan_detail->id_barang)->first();
     
                     $stock_barang = $barang->stock + $pesanan_detail->jumlah_pesanan;
